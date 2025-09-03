@@ -5,6 +5,10 @@ pre-push:
       glob: "*.{ts,tsx}"
       run: biome check --error-on-warnings {staged_files} && biome format --write {staged_files} && jest --passWithNoTests && git add {staged_files}
       stage_fixed: true
+    css:
+      glob: "*.css"
+      run: biome check --error-on-warnings {staged_files} && biome format --write {staged_files} && git add {staged_files}
+      stage_fixed: true
 
 pre-commit:
   parallel: true
@@ -13,3 +17,7 @@ pre-commit:
       glob: "*.{ts,tsx}"
       run: biome check {staged_files} && biome format --write {staged_files} && git add {staged_files}
       stage_fixed: true
+    css:
+     glob: "*.css"
+     run: biome check {staged_files} && biome format --write {staged_files} && git add {staged_files}
+     stage_fixed: true
