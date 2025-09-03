@@ -1,0 +1,31 @@
+pre-push:
+  parallel: true
+  commands:
+    js:
+      glob: "*.{ts,tsx}"
+      run: biome check --error-on-warnings {staged_files} && biome format --write {staged_files} && jest --passWithNoTests && git add {staged_files}
+      stage_fixed: true
+    css:
+      glob: "*.css"
+      run: biome check --error-on-warnings {staged_files} && biome format --write {staged_files} && git add {staged_files}
+      stage_fixed: true
+
+pre-commit:
+  parallel: true
+  commands:
+    js:
+      glob: "*.{ts,tsx}"
+      run: biome check {staged_files} && biome format --write {staged_files} && git add {staged_files}
+      stage_fixed: true
+    css:
+     glob: "*.css"
+     run: biome check {staged_files} && biome format --write {staged_files} && git add {staged_files}
+     stage_fixed: true
+
+commit-msg:
+  parallel: true
+  scripts:
+    # Lint commit messages based by the conventional commits
+    # https://www.conventionalcommits.org/en/v1.0.0/
+    "commitlint.sh":
+      runner: bash
