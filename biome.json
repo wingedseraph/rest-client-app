@@ -91,7 +91,7 @@
               ":BLANK_LINE:",
               ["@/**"],
               [
-                "@api/**",
+                "@app/**",
                 "@components/**",
                 "@hooks/**",
                 "@pages/**",
