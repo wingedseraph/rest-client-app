@@ -28,7 +28,11 @@
     "rules": {
       "recommended": true,
       "nursery": {
-        "useSortedClasses": "error"
+        "useSortedClasses": {
+          "level": "warn",
+          "fix": "safe",
+          "options": {}
+        }
       },
       "suspicious": {
         "noUnknownAtRules": "off",
@@ -46,6 +50,19 @@
     "domains": {
       "next": "recommended",
       "react": "recommended"
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "all",
+      "semicolons": "always",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto"
     }
   },
   "assist": {
@@ -74,7 +91,7 @@
               ":BLANK_LINE:",
               ["@/**"],
               [
-                "@api/**",
+                "@app/**",
                 "@components/**",
                 "@hooks/**",
                 "@pages/**",

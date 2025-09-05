@@ -3,11 +3,11 @@ pre-push:
   commands:
     js:
       glob: "*.{ts,tsx}"
-      run: biome check --error-on-warnings {staged_files} && biome format --write {staged_files} && jest --passWithNoTests && git add {staged_files}
+      run: pnpm exec biome check --error-on-warnings && pnpm exec biome format --write && pnpm exec jest --passWithNoTests && git add
       stage_fixed: true
     css:
       glob: "*.css"
-      run: biome check --error-on-warnings {staged_files} && biome format --write {staged_files} && git add {staged_files}
+      run: pnpm exec biome check --error-on-warnings && pnpm exec biome format --write && git add
       stage_fixed: true
 
 pre-commit:
@@ -15,11 +15,11 @@ pre-commit:
   commands:
     js:
       glob: "*.{ts,tsx}"
-      run: biome check {staged_files} && biome format --write {staged_files} && git add {staged_files}
+      run: pnpm exec biome check {staged_files} && pnpm exec biome format --write {staged_files} && git add {staged_files}
       stage_fixed: true
     css:
      glob: "*.css"
-     run: biome check {staged_files} && biome format --write {staged_files} && git add {staged_files}
+     run: pnpm exec biome check {staged_files} && pnpm exec biome format --write {staged_files} && git add {staged_files}
      stage_fixed: true
 
 commit-msg:

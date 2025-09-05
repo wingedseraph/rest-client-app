@@ -1,0 +1,27 @@
+{
+  "Hello": {
+    "title": "Hello World"
+  },
+  "About": {
+    "title": "About This App",
+    "description": "This application is a demo REST client built with Next. It allows you to send HTTP requests, explore APIs and inspect responses, similar to tools like Postman.",
+    "back": "Go back to homepage"
+  },
+  "NotFound": {
+    "title": "404 — Page Not Found",
+    "description": "Sorry, the page you're looking for does not exist.",
+    "back": "Go back to homepage"
+  },
+  "Header": {
+    "home": "Home",
+    "about": "About"
+  },
+  "Search": {
+    "button": "Search",
+    "placeholder": "Enter URL"
+  },
+  "ErrorBoundary": {
+    "title": "Something went wrong",
+    "retry-button": "Try again"
+  }
+}
