@@ -1,9 +1,9 @@
-import { Link } from '@/i18n/navigation'
+import { Link } from '@/i18n/navigation';
 
-import { useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl';
 
 export default function NotFoundPage() {
-  const t = useTranslations('NotFound')
+  const t = useTranslations('NotFound');
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center space-y-6 p-8 text-center">
@@ -20,5 +20,5 @@ export default function NotFoundPage() {
         {t('back')}
       </Link>
     </div>
-  )
+  );
 }

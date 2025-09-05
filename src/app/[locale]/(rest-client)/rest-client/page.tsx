@@ -1,3 +1,3 @@
 export default function RestClientPage() {
-  return <p>RestClient</p>
+  return <p>RestClient</p>;
 }

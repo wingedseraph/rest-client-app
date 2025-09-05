@@ -1,3 +1,3 @@
 export default function HistoryPage() {
-  return <p>History</p>
+  return <p>History</p>;
 }
