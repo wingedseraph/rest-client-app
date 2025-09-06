@@ -1,0 +1,46 @@
+'use client';
+import Link from 'next/link';
+
+import LocaleSwitcher from '@/features/Locale/LocaleSwitcher';
+import { cn } from '@/lib/utils';
+import useScroll from '@/shared/hooks/useScroll';
+
+import { useTranslations } from 'next-intl';
+
+export default function Header() {
+  const t = useTranslations('Header');
+
+  const navLinks = [
+    { label: t('signIn'), href: '/login' },
+    { label: t('signUp'), href: '/register' },
+  ];
+  const { sticky, headerRef } = useScroll<HTMLDivElement>();
+
+  return (
+    <header
+      ref={headerRef}
+      className={cn(
+        'flex w-full flex-row items-center justify-between space-x-12 pb-5 text-xl tracking-tight transition-all sm:text-2xl md:space-x-24 xl:text-4xl',
+        sticky.isSticky && 'fixed top-0 z-50 animate-slideDown bg-background',
+      )}
+    >
+      <div className="flex flex-row items-center gap-5">
+        <Link href="/" className="flex flex-row items-center">
+          <p>
+            &#123; REST<span className="font-serif italic">ful</span>API &#125;
+          </p>
+        </Link>
+      </div>
+
+      <nav className="flex flex-row gap-5">
+        {navLinks.map((link) => (
+          <Link key={link.href} href={link.href}>
+            {link.label}
+          </Link>
+        ))}
+
+        <LocaleSwitcher />
+      </nav>
+    </header>
+  );
+}
