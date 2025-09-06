@@ -1,5 +1,0 @@
-# default values for environment variables
-MAX_COMMIT_MESSAGE_LENGTH=80
-
-# valid commit prefix types for semantic versioning
-VALID_COMMIT_PREFIXES="build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test"

@@ -1,26 +1,17 @@
 pre-push:
   parallel: true
   commands:
-    js:
-      glob: "*.{ts,tsx}"
+    all:
+      glob: "src/**/*"
       run: pnpm exec biome check --error-on-warnings && pnpm exec biome format --write && pnpm exec jest --passWithNoTests && git add
-      stage_fixed: true
-    css:
-      glob: "*.css"
-      run: pnpm exec biome check --error-on-warnings && pnpm exec biome format --write && git add
-      stage_fixed: true
 
 pre-commit:
   parallel: true
   commands:
-    js:
-      glob: "*.{ts,tsx}"
+    all:
+      glob: "src/**/*"
       run: pnpm exec biome check {staged_files} && pnpm exec biome format --write {staged_files} && git add {staged_files}
       stage_fixed: true
-    css:
-     glob: "*.css"
-     run: pnpm exec biome check {staged_files} && pnpm exec biome format --write {staged_files} && git add {staged_files}
-     stage_fixed: true
 
 commit-msg:
   parallel: true
