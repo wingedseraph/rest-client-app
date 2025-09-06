@@ -18,6 +18,11 @@
     "signIn": "Login",
     "signUp": "Register"
   },
+  "Footer": {
+    "client": "/client",
+    "variables": "/variables",
+    "history": "/history"
+  },
   "Search": {
     "button": "Search",
     "placeholder": "Enter URL"

@@ -18,6 +18,11 @@
     "signIn": "Войти",
     "signUp": "Зарегистрироваться"
   },
+  "Footer": {
+    "client": "/клиент",
+    "variables": "/переменные",
+    "history": "/история"
+  },
   "Search": {
     "button": "Поиск",
     "placeholder": "Введите ссылку"

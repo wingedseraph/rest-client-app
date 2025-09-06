@@ -1,7 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useTranslations } from 'next-intl';
+
 export default function Footer() {
+  const t = useTranslations('Footer');
+
   return (
     <footer className="sticky bottom-0 left-0 z-0 w-full bg-foreground text-background">
       <div className="flex h-fit w-full items-center justify-center md:h-80">
@@ -12,16 +16,16 @@ export default function Footer() {
                 href="/rest-client"
                 className="cursor-pointer hover:underline"
               >
-                /rest-client
+                {t('client')}
               </Link>
               <Link
                 href="/variables"
                 className="cursor-pointer hover:underline"
               >
-                /variables
+                {t('variables')}
               </Link>
               <Link href="/history" className="cursor-pointer hover:underline">
-                /history
+                {t('history')}
               </Link>
             </ul>
             <ul>
