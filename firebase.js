@@ -1,23 +1,20 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import {
-  getAuth,
-  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  getAuth,
   sendPasswordResetEmail,
+  signInWithEmailAndPassword,
   signOut,
-} from "firebase/auth";
-import {
-  getFirestore,
-  setDoc,
-  doc
-} from "firebase/firestore";
+} from 'firebase/auth';
+import { doc, getFirestore, setDoc } from 'firebase/firestore';
+
 const firebaseConfig = {
-  apiKey: "AIzaSyARQOEJ8GQZdL3RjjvtFerjpb5oZtlTCLA",
-  authDomain: "restclient-project.firebaseapp.com",
-  projectId: "restclient-project",
-  storageBucket: "restclient-project.firebasestorage.app",
-  messagingSenderId: "570963669477",
-  appId: "1:570963669477:web:64102d8434480178d2ff0c"
+  apiKey: 'AIzaSyARQOEJ8GQZdL3RjjvtFerjpb5oZtlTCLA',
+  authDomain: 'restclient-project.firebaseapp.com',
+  projectId: 'restclient-project',
+  storageBucket: 'restclient-project.firebasestorage.app',
+  messagingSenderId: '570963669477',
+  appId: '1:570963669477:web:64102d8434480178d2ff0c',
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -34,10 +31,10 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await setDoc(doc(db, "users", user.uid), {
+    await setDoc(doc(db, 'users', user.uid), {
       uid: user.uid,
       name,
-      authProvider: "local",
+      authProvider: 'local',
       email,
     });
   } catch (err) {
@@ -48,7 +45,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
 const sendPasswordReset = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    alert("Password reset link sent!");
+    alert('Password reset link sent!');
   } catch (err) {
     console.error(err);
     alert(err.message);
