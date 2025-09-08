@@ -142,9 +142,6 @@
   ::-moz-selection {
     @apply text-background bg-foreground;
   }
-  a {
-    @apply flex w-fit items-center justify-center;
-  }
   button:hover,
   a:hover {
     @apply underline underline-offset-8;

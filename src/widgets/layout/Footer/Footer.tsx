@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="flex h-fit w-full items-center justify-center md:h-80">
         <div className="relative flex h-full w-full items-start justify-end overflow-hidden px-12 py-12 text-right">
           <div className="flex flex-row space-x-12 text-xl leading-4 sm:space-x-16 sm:text-lg md:space-x-24 md:text-xl md:leading-12 xl:text-3xl">
-            <ul>
+            <ul className="flex w-fit flex-col gap-0 text-left sm:gap-2">
               <Link
                 href="/rest-client"
                 className="cursor-pointer hover:underline"
@@ -28,11 +28,11 @@ export default function Footer() {
                 {t('history')}
               </Link>
             </ul>
-            <ul>
+            <ul className="flex w-fit flex-col gap-0 text-left sm:gap-2">
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://github.com/wingedseraph"
+                href="https://github.com/wingedseraph/rest-client-app"
               >
                 /github
               </a>
@@ -41,8 +41,8 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://rs.school/courses/reactjs"
+                className="flex h-8 w-10 items-center justify-center sm:h-16 sm:w-20"
               >
-                /
                 <Image
                   src="/logo.webp"
                   alt="logo of rs school"

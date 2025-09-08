@@ -20,11 +20,11 @@ export default function Header() {
     <header
       ref={headerRef}
       className={cn(
-        'flex w-full flex-row items-center justify-between space-x-12 pb-5 text-xl tracking-tight transition-all sm:text-2xl md:space-x-24 xl:text-4xl',
+        'flex w-full flex-row items-center justify-between space-x-12 border-muted-foreground border-b-1 pb-2 text-base tracking-tight transition-all sm:text-2xl md:space-x-24 xl:text-4xl',
         sticky.isSticky && 'fixed top-0 z-50 animate-slideDown bg-background',
       )}
     >
-      <div className="flex flex-row items-center gap-5">
+      <div className="flex flex-row items-center">
         <Link href="/" className="flex flex-row items-center">
           <p>
             &#123; REST<span className="font-serif italic">ful</span>API &#125;
@@ -32,7 +32,7 @@ export default function Header() {
         </Link>
       </div>
 
-      <nav className="flex flex-row gap-5">
+      <nav className="flex flex-col gap-0 text-end sm:flex-row sm:gap-5">
         {navLinks.map((link) => (
           <Link key={link.href} href={link.href}>
             {link.label}
