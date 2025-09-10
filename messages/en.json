@@ -23,5 +23,6 @@
   "ErrorBoundary": {
     "title": "Something went wrong",
     "retry-button": "Try again"
-  }
+  },
+  "Register": {}
 }
