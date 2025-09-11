@@ -23,5 +23,23 @@
   "ErrorBoundary": {
     "title": "Что-то пошло не так",
     "retry-button": "Попробовать еще раз"
+  },
+  "FormDataAndErrors": {
+    "email-required": "Пароль обязателен",
+    "email-invalid": "Невалидный тип почты",
+    "password-required": "Пароль обязателен",
+    "password-too-short": "Пароль должен содержать более 8 символов",
+    "password-uppercase": "Пароль должен содержать минимум 1 букву в верхнем регистре",
+    "password-number": "Пароль должен содержать минимум 1 цифру",
+    "name-length": "Имя должно содержать более 3 букв",
+    "create-account": "Создайте аккаунт",
+    "or": "или",
+    "log-in": "Войдите",
+    "password": "Пароль",
+    "register": {
+      "name": "Имя",
+      "insert-name": "Введите имя",
+      "register": "Зарегистрироваться"
+    }
   }
 }

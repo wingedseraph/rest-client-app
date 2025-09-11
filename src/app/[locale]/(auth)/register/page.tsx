@@ -5,15 +5,17 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { getFirebaseErrorMessage } from '@/lib/errorHelper';
-// import { createSchemas, type RegisterFormData} from 'lib/validation';
-import { type RegisterFormData, registerSchema } from '@/lib/validation';
+import { createRegisterSchema, type RegisterFormData } from '@/lib/validation';
 
 import { registerWithEmailAndPassword } from '../../../../../firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 export default function Register() {
+  const t = useTranslations('FormDataAndErrors');
+  const registerSchema = createRegisterSchema(t);
   const {
     register,
     handleSubmit,
@@ -47,15 +49,15 @@ export default function Register() {
       <div className="w-full max-w-md space-y-8">
         <div>
           <h2 className="mt-6 text-center font-extrabold text-3xl text-gray-900">
-            Create account
+            {t('create-account')}
           </h2>
           <p className="mt-2 text-center text-gray-600 text-sm">
-            or{' '}
+            {t('or')}{' '}
             <Link
               href="/login"
               className="font-medium text-blue-600 hover:text-blue-500"
             >
-              log in to existing one
+              {t('log-in')}
             </Link>
           </p>
         </div>
@@ -72,7 +74,7 @@ export default function Register() {
               htmlFor="name"
               className="block font-medium text-gray-700 text-sm"
             >
-              Name
+              {t('register.name')}
             </label>
             <input
               id="name"
@@ -81,7 +83,7 @@ export default function Register() {
               className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm ${
                 errors.name ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder="Insert your name"
+              placeholder={t('register.insert-name')}
               {...register('name')}
             />
             {errors.name && (
@@ -118,7 +120,7 @@ export default function Register() {
               htmlFor="password"
               className="block font-medium text-gray-700 text-sm"
             >
-              Password
+              {t('password')}
             </label>
             <input
               id="password"
@@ -127,7 +129,7 @@ export default function Register() {
               className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm ${
                 errors.password ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder="Set password"
+              placeholder={t('password')}
               {...register('password')}
             />
             {errors.password && (

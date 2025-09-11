@@ -4,14 +4,17 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { getFirebaseErrorMessage } from '@/lib/errorHelper';
-import { type AuthFormData, authSchema } from '@/lib/validation';
+import { type AuthFormData, createAuthSchema } from '@/lib/validation';
 
 import { logInWithEmailAndPassword } from '../../../../../firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 export default function Login() {
+  const t = useTranslations('FormDataAndErrors');
+  const authSchema = createAuthSchema(t);
   const {
     register,
     handleSubmit,
@@ -48,15 +51,15 @@ export default function Login() {
       <div className="w-full max-w-md space-y-8">
         <div>
           <h2 className="mt-6 text-center font-extrabold text-3xl text-gray-900">
-            Log in
+            {t('log-in')}
           </h2>
           <p className="mt-2 text-center text-gray-600 text-sm">
-            or
+            {t('or')}{' '}
             <Link
               href="/register"
               className="font-medium text-blue-600 hover:text-blue-500"
             >
-              create new account
+              {t('create-account')}
             </Link>
           </p>
         </div>
@@ -95,7 +98,7 @@ export default function Login() {
               htmlFor="password"
               className="block font-medium text-gray-700 text-sm"
             >
-              Password
+              {t('password')}
             </label>
             <input
               id="password"
@@ -104,7 +107,7 @@ export default function Login() {
               className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm ${
                 errors.password ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder="Pleae provide your password"
+              placeholder={t('password')}
               {...register('password')}
             />
             {errors.password && (
@@ -125,14 +128,6 @@ export default function Login() {
                 'Log in'
               )}
             </button>
-          </div>
-          <div className="text-center">
-            <Link
-              href="/forgot-password"
-              className="text-blue-600 text-sm hover:text-blue-500"
-            >
-              Forgot password?
-            </Link>
           </div>
         </form>
       </div>

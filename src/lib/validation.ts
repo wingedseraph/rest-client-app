@@ -1,20 +1,24 @@
 import { z } from 'zod';
 
-export const authSchema = z.object({
-  email: z.string().min(1, 'Email is required'),
-  password: z
-    .string()
-    .min(1, 'Password is required')
-    .min(8, 'Password should be of length at least 8 symbols')
-    .regex(/[A-Z]/, 'Password should use at least one uppercase letter')
-    .regex(/[0-9]/, 'Password should use at least one numeric symbol'),
-});
+export const createAuthSchema = (t: (key: string) => string) => {
+  return z.object({
+    email: z.string().min(1, t('email-required')).email(t('email-invalid')),
+    password: z
+      .string()
+      .min(1, t('password-required'))
+      .min(8, t('password-too-short'))
+      .regex(/[A-Z]/, t('password-uppercase'))
+      .regex(/[0-9]/, t('password-number')),
+  });
+};
 
-export const registerSchema = authSchema.extend({
-  name: z.string().min(3, 'Name should contain more than three letters'),
-});
+export const createRegisterSchema = (t: (key: string) => string) => {
+  const baseSchema = createAuthSchema(t);
 
-export type AuthFormData = z.infer<typeof authSchema>;
-export type RegisterFormData = z.infer<typeof registerSchema>;
+  return baseSchema.extend({
+    name: z.string().min(3, t('name-length')),
+  });
+};
 
-//
+export type AuthFormData = z.infer<ReturnType<typeof createAuthSchema>>;
+export type RegisterFormData = z.infer<ReturnType<typeof createRegisterSchema>>;
