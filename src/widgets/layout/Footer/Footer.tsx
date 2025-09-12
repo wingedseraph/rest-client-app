@@ -27,16 +27,31 @@ export default function Footer() {
               <Link href="/history" className="cursor-pointer hover:underline">
                 {t('history')}
               </Link>
+
+              <li className="flex w-fit items-center justify-center">/2025</li>
             </ul>
             <ul className="flex w-fit flex-col gap-0 text-left sm:gap-2">
               <a
                 target="_blank"
                 rel="noopener noreferrer"
-                href="https://github.com/wingedseraph/rest-client-app"
+                href="https://github.com/wingedseraph"
               >
-                /github
+                /wing...
               </a>
-              <li className="flex w-fit items-center justify-center">/2025</li>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/RobMarv1n"
+              >
+                /rob...
+              </a>
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/rustytrooper"
+              >
+                /rusty...
+              </a>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -46,9 +61,9 @@ export default function Footer() {
                 <Image
                   src="/logo.webp"
                   alt="logo of rs school"
-                  className="invert"
-                  width={80}
-                  height={80}
+                  className="invert fixed bottom-0 right-0"
+                  width={100}
+                  height={100}
                 />
               </a>
             </ul>
