@@ -44,7 +44,7 @@ export default function HeaderEditor({
         <Button
           type="button"
           variant="ghost"
-          className="text-foreground text-sm hover:bg-foreground hover:text-background"
+          className="text-foreground text-sm no-underline no-underline hover:bg-foreground hover:text-background"
           onClick={submit}
         >
           Add Header

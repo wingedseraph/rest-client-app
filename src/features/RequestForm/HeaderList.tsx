@@ -19,7 +19,7 @@ export default function HeaderList({ headers, onRemove }: Props) {
             type="button"
             variant="ghost"
             onClick={() => onRemove(key)}
-            className="text-foreground text-sm hover:bg-foreground hover:text-background"
+            className="text-foreground text-sm no-underline hover:bg-foreground hover:text-background"
           >
             Remove
           </Button>

@@ -36,7 +36,7 @@ export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
           type="button"
           variant="ghost"
           disabled={!body}
-          className="text-foreground text-sm hover:bg-foreground hover:text-background disabled:opacity-50"
+          className="text-foreground text-sm no-underline hover:bg-foreground hover:text-background disabled:opacity-50"
         >
           Prettify JSON
         </Button>

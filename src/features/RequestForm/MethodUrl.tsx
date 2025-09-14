@@ -40,7 +40,7 @@ export default function MethodUrl({
       <Button
         type="submit"
         variant="ghost"
-        className="text-foreground text-sm hover:bg-foreground hover:text-background"
+        className="text-foreground text-sm no-underline hover:bg-foreground hover:text-background"
       >
         Request
       </Button>
