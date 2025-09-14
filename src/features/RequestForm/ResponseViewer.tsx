@@ -1,4 +1,4 @@
-import { responseSchema } from '@/app/api/request/route';
+import { responseSchema } from '@/app/api/request/schema';
 
 export default function ResponseViewer({ response }: { response: unknown }) {
   if (!response) return null;
