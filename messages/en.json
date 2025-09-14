@@ -14,7 +14,14 @@
   },
   "Header": {
     "home": "Home",
-    "about": "About"
+    "about": "About",
+    "signIn": "Login",
+    "signUp": "Register"
+  },
+  "Footer": {
+    "client": "/client",
+    "variables": "/variables",
+    "history": "/history"
   },
   "Search": {
     "button": "Search",
@@ -23,5 +30,9 @@
   "ErrorBoundary": {
     "title": "Something went wrong",
     "retry-button": "Try again"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "switchLocale": "{locale, select, ru {Russian} en {English} other {unknown}}"
   }
 }

@@ -14,7 +14,14 @@
   },
   "Header": {
     "home": "Домой",
-    "about": "О нас"
+    "about": "О нас",
+    "signIn": "Войти",
+    "signUp": "Зарегистрироваться"
+  },
+  "Footer": {
+    "client": "/клиент",
+    "variables": "/переменные",
+    "history": "/история"
   },
   "Search": {
     "button": "Поиск",
@@ -23,5 +30,9 @@
   "ErrorBoundary": {
     "title": "Что-то пошло не так",
     "retry-button": "Попробовать еще раз"
+  },
+  "LocaleSwitcher": {
+    "label": "Поменять язык",
+    "switchLocale": "{locale, select, ru {Русский} en {Английский} other {Неизвестно}}"
   }
 }
