@@ -34,5 +34,31 @@
   "LocaleSwitcher": {
     "label": "Change language",
     "switchLocale": "{locale, select, ru {Russian} en {English} other {unknown}}"
+  },
+  "RequestForm": {
+    "method": "Method",
+    "url": "URL",
+    "headers": "Headers",
+    "body": "Body",
+    "send": "Send Request",
+    "response": "Response",
+    "button": {
+      "request": "Request",
+      "remove": "Remove",
+      "addHeader": "Add Header",
+      "prettifyJson": "Prettify JSON"
+    },
+    "label": {
+      "requestBody": "Request Body"
+    },
+    "status": {
+      "status": "Status",
+      "statusText": "Status Text",
+      "responseTime": "Response Time"
+    },
+    "error": {
+      "wrongHeader": "Wrong header key or value",
+      "wrongBody": "Wrong JSON"
+    }
   }
 }

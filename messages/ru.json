@@ -34,5 +34,31 @@
   "LocaleSwitcher": {
     "label": "Поменять язык",
     "switchLocale": "{locale, select, ru {Русский} en {Английский} other {Неизвестно}}"
+  },
+  "RequestForm": {
+    "method": "Метод",
+    "url": "URL",
+    "headers": "Заголовки",
+    "body": "Тело",
+    "send": "Отправить запрос",
+    "response": "Ответ",
+    "button": {
+      "request": "Запрос",
+      "remove": "Удалить",
+      "addHeader": "Добавить заголовок",
+      "prettifyJson": "Форматировать JSON"
+    },
+    "label": {
+      "requestBody": "Тело запроса"
+    },
+    "status": {
+      "status": "Статус",
+      "statusText": "Текст статуса",
+      "responseTime": "Время ответа"
+    },
+    "error": {
+      "wrongHeader": "Неверный ключ или значение заголовка",
+      "wrongBody": "Неверный JSON"
+    }
   }
 }

@@ -1,11 +1,14 @@
 import { Button } from '@/shared/ui/button';
 
+import { useTranslations } from 'next-intl';
+
 type Props = {
   headers: Record<string, string> | undefined;
   onRemove: (key: string) => void;
 };
 
 export default function HeaderList({ headers, onRemove }: Props) {
+  const t = useTranslations('RequestForm');
   return (
     <>
       {Object.entries(headers || {}).map(([key, value]) => (
@@ -21,7 +24,7 @@ export default function HeaderList({ headers, onRemove }: Props) {
             onClick={() => onRemove(key)}
             className="text-foreground text-sm no-underline hover:bg-foreground hover:text-background"
           >
-            Remove
+            {t('button.remove')}
           </Button>
         </div>
       ))}

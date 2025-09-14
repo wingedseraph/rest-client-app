@@ -1,5 +1,7 @@
 import { type FormEvent, useState } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 export type HttpRequest = {
   url: string;
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -26,6 +28,8 @@ export const HTML_METHODS = {
 } as const;
 
 export function useHttpRequest() {
+  const t = useTranslations('RequestForm');
+
   const [request, setRequest] = useState<HttpRequest>({
     url: 'https://dummyjson.com/test',
     method: 'GET',
@@ -69,7 +73,7 @@ export function useHttpRequest() {
       body &&
       !isJsonString(body)
     ) {
-      setError((prev) => ({ ...prev, body: 'wrong json' }));
+      setError((prev) => ({ ...prev, body: t('error.wrongBody') }));
       return;
     }
 

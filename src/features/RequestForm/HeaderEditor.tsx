@@ -2,18 +2,21 @@ import { useState } from 'react';
 
 import { Button } from '@/shared/ui/button';
 
+import { useTranslations } from 'next-intl';
+
 export default function HeaderEditor({
   onAdd,
 }: {
   onAdd: (key: string, value: string) => void;
 }) {
+  const t = useTranslations('RequestForm');
   const [key, setKey] = useState('');
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
 
   const submit = () => {
     if (!key || !value) {
-      setError('wrong header key or value');
+      setError(t('error.wrongHeader'));
       return;
     }
     onAdd(key, value);
@@ -47,7 +50,7 @@ export default function HeaderEditor({
           className="text-foreground text-sm no-underline hover:bg-foreground hover:text-background"
           onClick={submit}
         >
-          Add Header
+          {t('button.addHeader')}
         </Button>
       </div>
       {error && (

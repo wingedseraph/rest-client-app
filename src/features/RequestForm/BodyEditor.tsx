@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react';
 import { Button } from '@/shared/ui/button';
 
 import type { HttpRequest } from './useHttpRequest';
+import { useTranslations } from 'next-intl';
 
 type Props = {
   method: HttpRequest['method'];
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
+  const t = useTranslations('RequestForm');
   const [body, setBody] = useState(defaultBody);
 
   const prettifyJson = useCallback(() => {
@@ -29,7 +31,7 @@ export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
           htmlFor="request-body"
           className="font-medium text-gray-700 text-sm"
         >
-          Request Body
+          {t('label.requestBody')}
         </label>
         <Button
           onClick={prettifyJson}
@@ -38,7 +40,7 @@ export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
           disabled={!body}
           className="text-foreground text-sm no-underline hover:bg-foreground hover:text-background disabled:opacity-50"
         >
-          Prettify JSON
+          {t('button.prettifyJson')}
         </Button>
       </div>
       <textarea
