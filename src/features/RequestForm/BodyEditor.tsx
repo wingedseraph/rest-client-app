@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { Button } from '@/shared/ui/Button';
+import { Button } from '@/shared/ui/button';
 
 import type { HttpRequest } from './useHttpRequest';
 

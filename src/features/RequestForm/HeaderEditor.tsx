@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Button } from '@/shared/ui/Button';
+import { Button } from '@/shared/ui/button';
 
 export default function HeaderEditor({
   onAdd,
