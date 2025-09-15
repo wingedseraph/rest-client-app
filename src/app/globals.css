@@ -4,6 +4,16 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --animate-slideDown: slideDown 0.5s ease forwards;
+  @keyframes slideDown {
+    from {
+      transform: translateY(-50px);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -116,7 +126,31 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
   body {
-    @apply bg-background text-foreground;
+    @apply h-full;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  main {
+    @apply relative w-full min-h-screen z-10 bg-background pb-20;
+  }
+  ::selection {
+    @apply text-background bg-foreground;
+  }
+  ::-moz-selection {
+    @apply text-background bg-foreground;
+  }
+  button:hover,
+  a:hover {
+    @apply underline underline-offset-4;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-3 bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-none bg-foreground;
   }
 }
