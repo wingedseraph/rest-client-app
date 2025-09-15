@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="sticky bottom-0 left-0 z-0 w-full bg-foreground text-background">
       <div className="flex h-fit w-full items-center justify-center md:h-80">
-        <div className="relative flex h-full w-full items-start justify-end overflow-hidden px-12 py-12 text-right">
+        <div className="relative flex h-full w-full items-start justify-end overflow-hidden py-12 text-right">
           <div className="flex flex-row space-x-12 text-xl leading-4 sm:space-x-16 sm:text-lg md:space-x-24 md:text-xl md:leading-12 xl:text-3xl">
             <ul className="flex w-fit flex-col gap-0 text-left sm:gap-2">
               <Link
@@ -61,7 +61,7 @@ export default function Footer() {
                 <Image
                   src="/logo.webp"
                   alt="logo of rs school"
-                  className="invert fixed bottom-0 right-0"
+                  className="fixed right-0 bottom-0 invert"
                   width={100}
                   height={100}
                 />

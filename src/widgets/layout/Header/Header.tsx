@@ -20,7 +20,7 @@ export default function Header() {
     <header
       ref={headerRef}
       className={cn(
-        'flex w-full flex-row items-center justify-between space-x-12 border-muted-foreground border-b-1 pb-2 text-base tracking-tight transition-all sm:text-2xl md:space-x-24 xl:text-4xl',
+        'flex w-full flex-row items-center justify-between space-x-12 border-muted-foreground border-b-1 text-base tracking-tight transition-all sm:text-2xl md:space-x-24 xl:text-4xl',
         sticky.isSticky && 'fixed top-0 z-50 animate-slideDown bg-background',
       )}
     >
