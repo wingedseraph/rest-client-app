@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 
 import { getFirebaseErrorMessage } from '@/lib/errorHelper';
 import { type AuthFormData, createAuthSchema } from '@/lib/validation';
+import { firebaseAuthService } from '@/services/authService';
 
-import { logInWithEmailAndPassword } from '../../../../../firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
 import { useTranslations } from 'next-intl';
@@ -34,14 +34,21 @@ export default function Login() {
   const onSubmit = async (data: AuthFormData) => {
     setFirebaseError('');
     try {
-      await logInWithEmailAndPassword(data.email, data.password);
-      router.push('/rest-client');
-      router.refresh();
+      const userCredential =
+        await firebaseAuthService.logInWithEmailAndPassword(
+          data.email,
+          data.password,
+        );
+      if (userCredential?.user) {
+        router.push('/rest-client');
+        router.refresh();
+      }
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         const errorMessage = getFirebaseErrorMessage(error.code);
         setFirebaseError(errorMessage);
         setError('root', { message: errorMessage });
+        throw new Error(errorMessage);
       }
     }
   };
@@ -125,7 +132,7 @@ export default function Login() {
               {isSubmitting ? (
                 <div className="h-5 w-5 animate-spin rounded-full border-white border-b-2"></div>
               ) : (
-                'Log in'
+                t('log-in')
               )}
             </button>
           </div>

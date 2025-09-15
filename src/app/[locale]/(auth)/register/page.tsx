@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 
 import { getFirebaseErrorMessage } from '@/lib/errorHelper';
 import { createRegisterSchema, type RegisterFormData } from '@/lib/validation';
+import { firebaseAuthService } from '@/services/authService';
 
-import { registerWithEmailAndPassword } from '../../../../../firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
 import { useTranslations } from 'next-intl';
@@ -32,14 +32,26 @@ export default function Register() {
     setFirebaseError('');
 
     try {
-      await registerWithEmailAndPassword(data.name, data.email, data.password);
-      router.push('/rest-client');
-      router.refresh();
+      const user = await firebaseAuthService.registerWithEmailAndPassword(
+        data.name,
+        data.email,
+        data.password,
+      );
+      if (user) {
+        router.push('/rest-client');
+        router.refresh();
+      }
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         const errorMessage = getFirebaseErrorMessage(error.code);
         setFirebaseError(errorMessage);
         setError('root', { message: errorMessage });
+        if (error.code === 'auth/email-already-in-use') {
+          setError('email', {
+            type: 'manual',
+            message: errorMessage,
+          });
+        }
       }
     }
   };
@@ -113,8 +125,8 @@ export default function Register() {
                 {errors.email.message}
               </p>
             )}
+            {errors?.email?.type === 'manual' && errors.email.message}
           </div>
-
           <div>
             <label
               htmlFor="password"
@@ -148,7 +160,7 @@ export default function Register() {
               {isSubmitting ? (
                 <div className="h-5 w-5 animate-spin rounded-full border-white border-b-2"></div>
               ) : (
-                'Зарегистрироваться'
+                t('register.register')
               )}
             </button>
           </div>
