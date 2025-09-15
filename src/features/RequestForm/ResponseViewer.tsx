@@ -5,7 +5,15 @@ import { useTranslations } from 'next-intl';
 export default function ResponseViewer({ response }: { response: unknown }) {
   const t = useTranslations('RequestForm');
   if (!response) return null;
-  const { status, statusText, responseTime } = responseSchema.parse(response);
+  const parsed = responseSchema.safeParse(response);
+  const { status, statusText, responseTime } = parsed.success
+    ? parsed.data
+    : {
+        status: t('error.requestUnknown'),
+        statusText: t('error.requestUnknown'),
+        responseTime: 0,
+      };
+
   return (
     <div className="mt-4 flex flex-col">
       <p className="text-sm">

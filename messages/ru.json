@@ -58,7 +58,8 @@
     },
     "error": {
       "wrongHeader": "Неверный ключ или значение заголовка",
-      "wrongBody": "Неверный JSON"
+      "wrongBody": "Неверный JSON",
+      "requestUnknown": "Неизвестно"
     }
   }
 }

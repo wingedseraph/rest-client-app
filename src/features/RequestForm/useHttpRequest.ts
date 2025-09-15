@@ -119,7 +119,9 @@ export function useHttpRequest() {
       const data = await response.json();
       setResponse(data);
     } catch {
-      setResponse({ error: 'Network Error' });
+      setResponse({
+        error: 'Wrong Request',
+      });
     }
   };
 

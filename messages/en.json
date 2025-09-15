@@ -58,7 +58,8 @@
     },
     "error": {
       "wrongHeader": "Wrong header key or value",
-      "wrongBody": "Wrong JSON"
+      "wrongBody": "Wrong JSON",
+      "requestUnknown": "Unknown"
     }
   }
 }
