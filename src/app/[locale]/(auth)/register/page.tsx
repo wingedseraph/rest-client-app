@@ -15,9 +15,9 @@ import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 export default function Register() {
-  const t = useTranslations('FormDataAndErrors');
-  const t_ = useTranslations('FirebaseErrors');
-  const registerSchema = createRegisterSchema(t);
+  const tForm = useTranslations('FormDataAndErrors');
+  const tFirebase = useTranslations('FirebaseErrors');
+  const registerSchema = createRegisterSchema(tForm);
   const {
     register,
     handleSubmit,
@@ -46,7 +46,7 @@ export default function Register() {
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         const key = getFirebaseErrorMessageKey(error.code);
-        const msg = t_(key);
+        const msg = tFirebase(key);
         setFirebaseError(msg);
         setError('root', { message: msg });
       }
@@ -58,15 +58,15 @@ export default function Register() {
       <div className="w-full max-w-md space-y-8">
         <div>
           <h2 className="mt-6 text-center font-extrabold text-3xl text-gray-900">
-            {t('create-account')}
+            {tForm('create-account')}
           </h2>
           <p className="mt-2 text-center text-gray-600 text-sm">
-            {t('or')}{' '}
+            {tForm('or')}{' '}
             <Link
               href="/login"
               className="font-medium text-muted-foreground no-underline hover:text-foreground"
             >
-              {t('log-in')}
+              {tForm('log-in')}
             </Link>
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function Register() {
               htmlFor="name"
               className="block font-medium text-gray-700 text-sm"
             >
-              {t('register.name')}
+              {tForm('register.name')}
             </label>
             <input
               id="name"
@@ -92,7 +92,7 @@ export default function Register() {
               className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-1 focus:ring-foreground sm:text-sm ${
                 errors.name ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder={t('insert-name')}
+              placeholder={tForm('insert-name')}
               {...register('name')}
             />
             {errors.name && (
@@ -128,7 +128,7 @@ export default function Register() {
               htmlFor="password"
               className="block font-medium text-gray-700 text-sm"
             >
-              {t('password')}
+              {tForm('password')}
             </label>
             <input
               id="password"
@@ -137,7 +137,7 @@ export default function Register() {
               className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-1 focus:ring-foreground sm:text-sm ${
                 errors.password ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder={t('insert-password')}
+              placeholder={tForm('insert-password')}
               {...register('password')}
             />
             {errors.password && (
@@ -157,7 +157,7 @@ export default function Register() {
               {isSubmitting ? (
                 <div className="h-5 w-5 animate-spin rounded-full border-white border-b-2"></div>
               ) : (
-                t('register.register')
+                tForm('register.register')
               )}
             </Button>
           </div>
