@@ -1,4 +1,5 @@
 import { auth, db } from '../../firebase';
+import { FirebaseError } from 'firebase/app';
 import {
   type Auth,
   createUserWithEmailAndPassword,
@@ -38,6 +39,9 @@ class FirebaseAuthService {
       );
       return userCredential;
     } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        throw err;
+      }
       if (err instanceof Error) {
         throw new Error(`Login failed: ${err.message}`);
       }
@@ -68,6 +72,9 @@ class FirebaseAuthService {
       await setDoc(doc(this.db, 'users', user.uid), userData);
       return user;
     } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        throw err;
+      }
       if (err instanceof Error) {
         throw new Error(`Registration failed: ${err.message}`);
       }
@@ -79,6 +86,9 @@ class FirebaseAuthService {
     try {
       await sendPasswordResetEmail(this.auth, email);
     } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        throw err;
+      }
       if (err instanceof Error) {
         throw new Error(`Password reset failed: ${err.message}`);
       }

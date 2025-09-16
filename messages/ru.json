@@ -36,7 +36,7 @@
     "switchLocale": "{locale, select, ru {Русский} en {Английский} other {Неизвестно}}"
   },
   "FormDataAndErrors": {
-    "email-required": "Пароль обязателен",
+    "email-required": "Почта обязательна",
     "email-invalid": "Невалидный тип почты",
     "password-required": "Пароль обязателен",
     "password-too-short": "Пароль должен содержать более 8 символов",
@@ -52,5 +52,15 @@
       "insert-name": "Введите имя",
       "register": "Зарегистрироваться"
     }
+  },
+  "FirebaseErrors": {
+    "auth/user-not-found": "Пользователь с такой почтой не найден",
+    "auth/email-already-in-use": "Пользователь с такой почтой уже существует",
+    "auth/wrong-password": "Неверный пароль",
+    "auth/invalid-email": "Неверная почта",
+    "auth/invalid-credential": "Неверные учетные данные",
+    "auth/too-many-requests": "Слишком много попыток. Попробуйте позже",
+    "auth/user-disabled": "Аккаунт заблокирован",
+    "default": "Ошибка аутентификации"
   }
 }

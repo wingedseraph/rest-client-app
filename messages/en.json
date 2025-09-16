@@ -52,5 +52,15 @@
       "insert-name": "Insert your name",
       "register": "Register"
     }
+  },
+  "FirebaseErrors": {
+    "auth/user-not-found": "There is no user with such e-mail",
+    "auth/email-already-in-use": "User with such e-mail already exists",
+    "auth/wrong-password": "Wrong password",
+    "auth/invalid-email": "Wrong email",
+    "auth/invalid-credential": "Wrong credential data",
+    "auth/too-many-requests": "Too many tries. Please try later",
+    "auth/user-disabled": "Account is blocked",
+    "default": "Authentication error"
   }
 }

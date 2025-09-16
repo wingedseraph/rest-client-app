@@ -3,9 +3,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { getFirebaseErrorMessage } from '@/lib/errorHelper';
+import { getFirebaseErrorMessageKey } from '@/lib/errorHelper';
 import { type AuthFormData, createAuthSchema } from '@/lib/validation';
 import { firebaseAuthService } from '@/services/authService';
+import { Button } from '@/shared/ui/button';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
@@ -14,6 +15,7 @@ import { useForm } from 'react-hook-form';
 
 export default function Login() {
   const t = useTranslations('FormDataAndErrors');
+  const t_ = useTranslations('FirebaseErrors');
   const authSchema = createAuthSchema(t);
   const {
     register,
@@ -45,10 +47,10 @@ export default function Login() {
       }
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        const errorMessage = getFirebaseErrorMessage(error.code);
-        setFirebaseError(errorMessage);
-        setError('root', { message: errorMessage });
-        throw new Error(errorMessage);
+        const key = getFirebaseErrorMessageKey(error.code);
+        const msg = t_(key);
+        setFirebaseError(msg);
+        setError('root', { message: msg });
       }
     }
   };
@@ -64,7 +66,7 @@ export default function Login() {
             {t('or')}{' '}
             <Link
               href="/register"
-              className="font-medium text-blue-600 hover:text-blue-500"
+              className="font-medium text-muted-foreground no-underline hover:text-foreground"
             >
               {t('create-account')}
             </Link>
@@ -88,7 +90,7 @@ export default function Login() {
               id="email"
               type="email"
               autoComplete="email"
-              className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm ${
+              className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-1 focus:ring-foreground sm:text-sm ${
                 errors.email ? 'border-red-500' : 'border-gray-300'
               }`}
               placeholder="your@email.com"
@@ -111,7 +113,7 @@ export default function Login() {
               id="password"
               type="password"
               autoComplete="current-password"
-              className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm ${
+              className={`focus:foreground mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-1 focus:ring-foreground sm:text-sm ${
                 errors.password ? 'border-red-500' : 'border-gray-300'
               }`}
               placeholder={t('password')}
@@ -124,17 +126,18 @@ export default function Login() {
             )}
           </div>
           <div>
-            <button
-              type="submit"
+            <Button
               disabled={isSubmitting}
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 font-medium text-sm text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              type="submit"
+              variant="default"
+              className="w-full justify-center bg-foreground text-background text-sm no-underline"
             >
               {isSubmitting ? (
                 <div className="h-5 w-5 animate-spin rounded-full border-white border-b-2"></div>
               ) : (
                 t('log-in')
               )}
-            </button>
+            </Button>
           </div>
         </form>
       </div>
