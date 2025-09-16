@@ -1,4 +1,5 @@
-import { auth, db } from '../../firebase';
+import { auth, db } from '@/lib/firebase/client';
+
 import { FirebaseError } from 'firebase/app';
 import {
   type Auth,
