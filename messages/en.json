@@ -61,6 +61,6 @@
     "auth/invalid-credential": "Wrong credential data",
     "auth/too-many-requests": "Too many tries. Please try later",
     "auth/user-disabled": "Account is blocked",
-    "default": "Authentication error"
+    "unknown": "Unknown error"
   }
 }
