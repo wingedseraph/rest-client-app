@@ -111,7 +111,7 @@ export default function Register() {
               id="email"
               type="email"
               autoComplete="email"
-              className={`f mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:ring-foregroundfocus:outline-none focus:ring-1 sm:text-sm ${
+              className={`f mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-1 focus:ring-foreground sm:text-sm ${
                 errors.email ? 'border-red-500' : 'border-gray-300'
               }`}
               placeholder="@email.com"
