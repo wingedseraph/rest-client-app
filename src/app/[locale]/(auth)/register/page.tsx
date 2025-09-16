@@ -54,7 +54,7 @@ export default function Register() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8">
         <div>
           <h2 className="mt-6 text-center font-extrabold text-3xl text-gray-900">
@@ -92,7 +92,7 @@ export default function Register() {
               className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-1 focus:ring-foreground sm:text-sm ${
                 errors.name ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder={t('register.insert-name')}
+              placeholder={t('insert-name')}
               {...register('name')}
             />
             {errors.name && (
@@ -114,7 +114,7 @@ export default function Register() {
               className={`f mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:ring-foregroundfocus:outline-none focus:ring-1 sm:text-sm ${
                 errors.email ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder="your@email.com"
+              placeholder="@email.com"
               {...register('email')}
             />
             {errors.email && (
@@ -137,7 +137,7 @@ export default function Register() {
               className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-1 focus:ring-foreground sm:text-sm ${
                 errors.password ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder={t('password')}
+              placeholder={t('insert-password')}
               {...register('password')}
             />
             {errors.password && (

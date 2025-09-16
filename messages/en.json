@@ -47,9 +47,10 @@
     "or": "or",
     "log-in": "Log in",
     "password": "Password",
+    "insert-name": "Insert your name",
+    "insert-password": "Insert your password",
     "register": {
       "name": "Name",
-      "insert-name": "Insert your name",
       "register": "Register"
     }
   },

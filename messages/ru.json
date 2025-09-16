@@ -47,9 +47,10 @@
     "or": "или",
     "log-in": "Войти",
     "password": "Пароль",
+    "insert-name": "Введите имя",
+    "insert-password": "Введите пароль",
     "register": {
       "name": "Имя",
-      "insert-name": "Введите имя",
       "register": "Зарегистрироваться"
     }
   },
