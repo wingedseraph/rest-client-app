@@ -7,12 +7,12 @@ import { useRouter } from 'next/navigation';
 import { getFirebaseErrorMessageKey } from '@/lib/errorHelper';
 import { createRegisterSchema, type RegisterFormData } from '@/lib/validation';
 import { firebaseAuthService } from '@/services/authService';
+import { Button } from '@/shared/ui/button';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { Button } from '@/shared/ui/button';
 
 export default function Register() {
   const t = useTranslations('FormDataAndErrors');
@@ -89,7 +89,7 @@ export default function Register() {
               id="name"
               type="text"
               autoComplete="name"
-              className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:ring-1 focus:ring-foreground focus:outline-none  sm:text-sm ${
+              className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-1 focus:ring-foreground sm:text-sm ${
                 errors.name ? 'border-red-500' : 'border-gray-300'
               }`}
               placeholder={t('register.insert-name')}
@@ -111,7 +111,7 @@ export default function Register() {
               id="email"
               type="email"
               autoComplete="email"
-              className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:ring-1 focus:ring-foregroundfocus:outline-none f sm:text-sm ${
+              className={`f mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:ring-foregroundfocus:outline-none focus:ring-1 sm:text-sm ${
                 errors.email ? 'border-red-500' : 'border-gray-300'
               }`}
               placeholder="your@email.com"
@@ -134,7 +134,7 @@ export default function Register() {
               id="password"
               type="password"
               autoComplete="new-password"
-              className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:ring-1 focus:ring-foreground focus:outline-none  sm:text-sm ${
+              className={`mt-1 block w-full rounded-md border px-3 py-2 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-1 focus:ring-foreground sm:text-sm ${
                 errors.password ? 'border-red-500' : 'border-gray-300'
               }`}
               placeholder={t('password')}
