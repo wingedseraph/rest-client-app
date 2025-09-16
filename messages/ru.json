@@ -35,33 +35,60 @@
     "label": "Поменять язык",
     "switchLocale": "{locale, select, ru {Русский} en {Английский} other {Неизвестно}}"
   },
-  "FormDataAndErrors": {
-    "email-required": "Почта обязательна",
-    "email-invalid": "Невалидный тип почты",
-    "password-required": "Пароль обязателен",
-    "password-too-short": "Пароль должен содержать более 8 символов",
-    "password-uppercase": "Пароль должен содержать минимум 1 букву в верхнем регистре",
-    "password-number": "Пароль должен содержать минимум 1 цифру",
-    "name-length": "Имя должно содержать более 3 букв",
-    "create-account": "Создайте аккаунт",
-    "or": "или",
-    "log-in": "Войти",
-    "password": "Пароль",
-    "insert-name": "Введите имя",
-    "insert-password": "Введите пароль",
-    "register": {
-      "name": "Имя",
-      "register": "Зарегистрироваться"
+  "RequestForm": {
+    "method": "Метод",
+    "url": "URL",
+    "headers": "Заголовки",
+    "body": "Тело",
+    "send": "Отправить запрос",
+    "response": "Ответ",
+    "button": {
+      "request": "Запрос",
+      "remove": "Удалить",
+      "addHeader": "Добавить заголовок",
+      "prettifyJson": "Форматировать JSON"
+    },
+    "label": {
+      "requestBody": "Тело запроса"
+    },
+    "status": {
+      "status": "Статус",
+      "statusText": "Текст статуса",
+      "responseTime": "Время ответа"
+    },
+    "error": {
+      "wrongHeader": "Неверный ключ или значение заголовка",
+      "wrongBody": "Неверный JSON",
+      "requestUnknown": "Неизвестно"
+    },
+    "FormDataAndErrors": {
+      "email-required": "Почта обязательна",
+      "email-invalid": "Невалидный тип почты",
+      "password-required": "Пароль обязателен",
+      "password-too-short": "Пароль должен содержать более 8 символов",
+      "password-uppercase": "Пароль должен содержать минимум 1 букву в верхнем регистре",
+      "password-number": "Пароль должен содержать минимум 1 цифру",
+      "name-length": "Имя должно содержать более 3 букв",
+      "create-account": "Создайте аккаунт",
+      "or": "или",
+      "log-in": "Войти",
+      "password": "Пароль",
+      "insert-name": "Введите имя",
+      "insert-password": "Введите пароль",
+      "register": {
+        "name": "Имя",
+        "register": "Зарегистрироваться"
+      }
+    },
+    "FirebaseErrors": {
+      "auth/user-not-found": "Пользователь с такой почтой не найден",
+      "auth/email-already-in-use": "Пользователь с такой почтой уже существует",
+      "auth/wrong-password": "Неверный пароль",
+      "auth/invalid-email": "Неверная почта",
+      "auth/invalid-credential": "Неверные учетные данные",
+      "auth/too-many-requests": "Слишком много попыток. Попробуйте позже",
+      "auth/user-disabled": "Аккаунт заблокирован",
+      "unknown": "Неизвестная ошибка"
     }
-  },
-  "FirebaseErrors": {
-    "auth/user-not-found": "Пользователь с такой почтой не найден",
-    "auth/email-already-in-use": "Пользователь с такой почтой уже существует",
-    "auth/wrong-password": "Неверный пароль",
-    "auth/invalid-email": "Неверная почта",
-    "auth/invalid-credential": "Неверные учетные данные",
-    "auth/too-many-requests": "Слишком много попыток. Попробуйте позже",
-    "auth/user-disabled": "Аккаунт заблокирован",
-    "unknown": "Неизвестная ошибка"
   }
 }
