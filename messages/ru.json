@@ -34,5 +34,34 @@
   "LocaleSwitcher": {
     "label": "Поменять язык",
     "switchLocale": "{locale, select, ru {Русский} en {Английский} other {Неизвестно}}"
+  },
+  "FormDataAndErrors": {
+    "email-required": "Почта обязательна",
+    "email-invalid": "Невалидный тип почты",
+    "password-required": "Пароль обязателен",
+    "password-too-short": "Пароль должен содержать более 8 символов",
+    "password-uppercase": "Пароль должен содержать минимум 1 букву в верхнем регистре",
+    "password-number": "Пароль должен содержать минимум 1 цифру",
+    "name-length": "Имя должно содержать более 3 букв",
+    "create-account": "Создайте аккаунт",
+    "or": "или",
+    "log-in": "Войти",
+    "password": "Пароль",
+    "insert-name": "Введите имя",
+    "insert-password": "Введите пароль",
+    "register": {
+      "name": "Имя",
+      "register": "Зарегистрироваться"
+    }
+  },
+  "FirebaseErrors": {
+    "auth/user-not-found": "Пользователь с такой почтой не найден",
+    "auth/email-already-in-use": "Пользователь с такой почтой уже существует",
+    "auth/wrong-password": "Неверный пароль",
+    "auth/invalid-email": "Неверная почта",
+    "auth/invalid-credential": "Неверные учетные данные",
+    "auth/too-many-requests": "Слишком много попыток. Попробуйте позже",
+    "auth/user-disabled": "Аккаунт заблокирован",
+    "unknown": "Неизвестная ошибка"
   }
 }
