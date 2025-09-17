@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from 'react';
 
+import { useLocalStorage } from '../Variables/useLocalStorage';
 import { useTranslations } from 'next-intl';
 
 export type HttpRequest = {
@@ -10,6 +11,14 @@ export type HttpRequest = {
   name?: string;
 };
 
+export type Variable = {
+  id: string;
+  key: string;
+  value: string;
+};
+
+export const LOCAL_STORAGE_KEY = 'REST::CLIENT::VARIABLES' as const;
+
 const isJsonString = (str: string) => {
   try {
     JSON.parse(str);
@@ -17,6 +26,14 @@ const isJsonString = (str: string) => {
     return false;
   }
   return true;
+};
+
+const interpolateVariables = (text: string, variables: Variable[]): string => {
+  return variables.reduce((acc, variable) => {
+    const regex = new RegExp(`\\{\\{${variable.key}\\}\\}`, 'g');
+
+    return acc.replace(regex, variable.value);
+  }, text);
 };
 
 export const HTML_METHODS = {
@@ -29,6 +46,7 @@ export const HTML_METHODS = {
 
 export function useHttpRequest() {
   const t = useTranslations('RequestForm');
+  const [variables] = useLocalStorage<Variable[]>(LOCAL_STORAGE_KEY, []);
 
   const [request, setRequest] = useState<HttpRequest>({
     url: 'https://dummyjson.com/test',
@@ -66,28 +84,36 @@ export function useHttpRequest() {
     const method = (
       form.get('method') || 'GET'
     ).toString() as HttpRequest['method'];
+
     const body = (form.get('body') || '').toString();
+
+    const modifiedUrl = interpolateVariables(url, variables);
+    const modifiedHeaders: HttpRequest['headers'] = {};
+    const modifiedBody = interpolateVariables(body, variables);
 
     if (
       ['POST', 'PUT', 'PATCH'].includes(method) &&
-      body &&
-      !isJsonString(body)
+      modifiedBody &&
+      !isJsonString(modifiedBody)
     ) {
       setError((prev) => ({ ...prev, body: t('error.wrongBody') }));
       return;
     }
 
-    const encodedUrl = btoa(url);
+    const encodedUrl = btoa(modifiedUrl);
     let apiUrl = `/api/${method}/${encodedUrl}`;
 
-    if (body && ['POST', 'PUT', 'PATCH'].includes(method)) {
-      const encodedBody = btoa(body);
+    if (modifiedBody && ['POST', 'PUT', 'PATCH'].includes(method)) {
+      const encodedBody = btoa(modifiedBody);
       apiUrl += `/${encodedBody}`;
     }
 
     const queryParams = new URLSearchParams();
     Object.entries(request.headers || {}).forEach(([key, value]) => {
-      queryParams.append(key, encodeURIComponent(value));
+      const interpolateValue = interpolateVariables(value ?? '', variables);
+
+      modifiedHeaders[key] = interpolateValue;
+      queryParams.append(key, encodeURIComponent(interpolateValue));
     });
 
     if (queryParams.toString()) {
@@ -98,22 +124,24 @@ export function useHttpRequest() {
     window.history.pushState({}, '', displayUrl);
 
     const modifiedRequest: HttpRequest = {
-      url,
+      url: modifiedUrl,
       method,
-      headers: request.headers,
-      body: body ? JSON.parse(body) : '',
+      headers: modifiedHeaders,
+      body: modifiedBody ? JSON.parse(modifiedBody) : '',
       name: request.name || '',
     };
 
     try {
+      const interpolateHeaders = Object.fromEntries(
+        Object.entries(request.headers || {}).map(([key, value]) => [
+          key,
+          interpolateVariables(value, variables),
+        ]),
+      );
+
       const response = await fetch('/api/request', {
         method: 'POST',
-        headers: Object.fromEntries(
-          Object.entries(request.headers || {}).map(([key, value]) => [
-            key,
-            value,
-          ]),
-        ),
+        headers: interpolateHeaders,
         body: JSON.stringify(modifiedRequest),
       });
       const data = await response.json();
