@@ -1,7 +1,7 @@
 'use client';
-import Link from 'next/link';
 
 import LocaleSwitcher from '@/features/Locale/LocaleSwitcher';
+import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import useScroll from '@/shared/hooks/useScroll';
 
