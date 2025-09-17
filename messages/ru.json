@@ -35,6 +35,13 @@
     "label": "Поменять язык",
     "switchLocale": "{locale, select, ru {Русский} en {Английский} other {Неизвестно}}"
   },
+  "Variables": {
+    "header": "Переменные",
+    "delete-variable": "Удалить",
+    "add-variable": "Добавить",
+    "add-new-variable": "Добавить новую переменную",
+    "error": "Переменная уже существует"
+  },
   "RequestForm": {
     "method": "Метод",
     "url": "URL",
