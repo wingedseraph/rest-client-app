@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/Button/button';
 
 import type { HttpRequest } from './useHttpRequest';
 import { useTranslations } from 'next-intl';
@@ -13,15 +13,15 @@ type Props = {
 
 export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
   const t = useTranslations('RequestForm');
-  const [body, setBody] = useState(defaultBody);
+  const [requestBody, setRequestBody] = useState(defaultBody);
 
   const prettifyJson = useCallback(() => {
-    if (!body) return;
+    if (!requestBody) return;
     try {
-      const parsed = JSON.parse(body);
-      setBody(JSON.stringify(parsed, null, 2));
+      const parsed = JSON.parse(requestBody);
+      setRequestBody(JSON.stringify(parsed, null, 2));
     } catch {}
-  }, [body]);
+  }, [requestBody]);
 
   if (!['POST', 'PUT', 'PATCH'].includes(method)) return null;
   return (
@@ -37,7 +37,7 @@ export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
           onClick={prettifyJson}
           type="button"
           variant="ghost"
-          disabled={!body}
+          disabled={!requestBody}
           className="text-foreground text-sm no-underline hover:bg-foreground hover:text-background disabled:opacity-50"
         >
           {t('button.prettifyJson')}
@@ -46,8 +46,8 @@ export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
       <textarea
         id="request-body"
         name="body"
-        value={body}
-        onChange={(e) => setBody(e.target.value)}
+        value={requestBody}
+        onChange={(e) => setRequestBody(e.target.value)}
         className="w-full rounded-md border border-gray-300 px-3 py-2 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
         rows={8}
         placeholder='{"key": "value"}'

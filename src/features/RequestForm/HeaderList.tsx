@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/Button/button';
 
 import { useTranslations } from 'next-intl';
 
