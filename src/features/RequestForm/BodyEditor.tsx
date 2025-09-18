@@ -2,26 +2,40 @@ import { useCallback, useState } from 'react';
 
 import { Button } from '@/shared/ui/button';
 
-import type { HttpRequest } from './useHttpRequest';
+import type { HttpRequest } from './useSharedRequest';
 import { useTranslations } from 'next-intl';
 
 type Props = {
   method: HttpRequest['method'];
   defaultBody: string;
   bodyError?: string;
+  onBodyChange: (body: string) => void;
 };
 
-export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
+export default function BodyEditor({
+  method,
+  defaultBody,
+  bodyError,
+  onBodyChange,
+}: Props) {
   const t = useTranslations('RequestForm');
   const [body, setBody] = useState(defaultBody);
+
+  const handleBodyChange = useCallback(
+    (newBody: string) => {
+      setBody(newBody);
+      onBodyChange(newBody);
+    },
+    [onBodyChange],
+  );
 
   const prettifyJson = useCallback(() => {
     if (!body) return;
     try {
       const parsed = JSON.parse(body);
-      setBody(JSON.stringify(parsed, null, 2));
+      handleBodyChange(JSON.stringify(parsed, null, 2));
     } catch {}
-  }, [body]);
+  }, [body, handleBodyChange]);
 
   if (!['POST', 'PUT', 'PATCH'].includes(method)) return null;
   return (
@@ -47,7 +61,7 @@ export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
         id="request-body"
         name="body"
         value={body}
-        onChange={(e) => setBody(e.target.value)}
+        onChange={(e) => handleBodyChange(e.target.value)}
         className="w-full rounded-md border border-gray-300 px-3 py-2 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
         rows={8}
         placeholder='{"key": "value"}'

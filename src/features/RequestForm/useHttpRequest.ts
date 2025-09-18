@@ -1,14 +1,7 @@
 import { type FormEvent, useState } from 'react';
 
+import type { HttpRequest, RequestError } from './useSharedRequest';
 import { useTranslations } from 'next-intl';
-
-export type HttpRequest = {
-  url: string;
-  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-  headers?: Record<string, string>;
-  body?: string;
-  name?: string;
-};
 
 const isJsonString = (str: string) => {
   try {
@@ -27,39 +20,26 @@ export const HTML_METHODS = {
   DELETE: { id: 5, value: 'DELETE' },
 } as const;
 
-export function useHttpRequest() {
+type Props = {
+  request: HttpRequest;
+  updateRequest: (updates: HttpRequest) => void;
+  setRequestError: (error: RequestError) => void;
+  setRequestResponse: (response: unknown) => void;
+};
+
+export function useHttpRequest({
+  request,
+  updateRequest,
+  setRequestError,
+  setRequestResponse,
+}: Props) {
   const t = useTranslations('RequestForm');
-
-  const [request, setRequest] = useState<HttpRequest>({
-    url: 'https://dummyjson.com/test',
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    body: '',
-    name: '',
-  });
-  const [currentMethod, setCurrentMethod] =
-    useState<HttpRequest['method']>('GET');
-  const [response, setResponse] = useState<unknown>(null);
-  const [error, setError] = useState({ api: '', body: '' });
-
-  const addHeader = (key: string, value: string) => {
-    if (!key || !value) return;
-    setRequest((prev) => ({
-      ...prev,
-      headers: { ...prev.headers, [key]: value },
-    }));
-  };
-
-  const removeHeader = (key: string) => {
-    const newHeaders = { ...(request.headers || {}) };
-    delete newHeaders[key];
-    setRequest((prev) => ({ ...prev, headers: newHeaders }));
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setError({ api: '', body: '' });
+    setRequestError({ api: '', body: '' });
 
     const form = new FormData(event.currentTarget);
     const url = (form.get('url') || '').toString().trim();
@@ -73,9 +53,11 @@ export function useHttpRequest() {
       body &&
       !isJsonString(body)
     ) {
-      setError((prev) => ({ ...prev, body: t('error.wrongBody') }));
+      setRequestError({ api: '', body: t('error.wrongBody') });
       return;
     }
+
+    updateRequest({ url, method, body });
 
     const encodedUrl = btoa(url);
     let apiUrl = `/api/${method}/${encodedUrl}`;
@@ -102,10 +84,10 @@ export function useHttpRequest() {
       method,
       headers: request.headers,
       body: body ? JSON.parse(body) : '',
-      name: request.name || '',
     };
 
     try {
+      setIsLoading(true);
       const response = await fetch('/api/request', {
         method: 'POST',
         headers: Object.fromEntries(
@@ -117,22 +99,18 @@ export function useHttpRequest() {
         body: JSON.stringify(modifiedRequest),
       });
       const data = await response.json();
-      setResponse(data);
+      setRequestResponse(data);
     } catch {
-      setResponse({
+      setRequestResponse({
         error: 'Wrong Request',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return {
-    request,
-    currentMethod,
-    setCurrentMethod,
-    response,
-    error,
-    addHeader,
-    removeHeader,
     handleSubmit,
+    isLoading,
   };
 }
