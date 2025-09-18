@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 
-import type { RequestData, ResponseData } from '@/app/api/request/schema';
+import type { RequestData } from '@/app/api/request/schema';
 
 export type HttpRequest = {
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
@@ -46,7 +46,7 @@ export function useSharedRequest() {
     setError((prev) => ({ ...prev, ...error }));
   };
 
-  const setRequestResponse = (response: ResponseData) => {
+  const setRequestResponse = (response: unknown) => {
     setResponse(response);
   };
 
