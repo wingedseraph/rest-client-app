@@ -62,6 +62,12 @@
       "requestUnknown": "Unknown"
     }
   },
+  "Codegen": {
+    "title": "Code generation",
+    "select-language": "Select language:",
+    "generate": "Generate new snippet",
+    "no-generated-code": "Select a language and click generate"
+  },
   "FormDataAndErrors": {
     "email-required": "Email is required",
     "email-invalid": "Invalid type of email",

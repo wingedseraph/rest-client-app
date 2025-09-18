@@ -62,6 +62,12 @@
       "requestUnknown": "Неизвестно"
     }
   },
+  "Codegen": {
+    "title": "Генерация кода",
+    "select-language": "Выберите язык:",
+    "generate": "Сгенерировать новый код",
+    "no-generated-code": "Выберите язык и нажмите сгенерировать"
+  },
   "FormDataAndErrors": {
     "email-required": "Почта обязательна",
     "email-invalid": "Невалидный тип почты",
