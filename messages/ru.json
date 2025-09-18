@@ -63,10 +63,9 @@
     }
   },
   "Codegen": {
-    "title": "Генерация кода",
-    "select-language": "Выберите язык:",
     "generate": "Сгенерировать новый код",
-    "no-generated-code": "Выберите язык и нажмите сгенерировать"
+    "no-generated-code": "Выберите язык и нажмите сгенерировать",
+    "no-url-generate": "URL обязателен"
   },
   "FormDataAndErrors": {
     "email-required": "Почта обязательна",
