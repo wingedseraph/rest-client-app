@@ -44,6 +44,7 @@
     "response": "Ответ",
     "button": {
       "request": "Запрос",
+      "request-loading": "Запрос...",
       "remove": "Удалить",
       "addHeader": "Добавить заголовок",
       "prettifyJson": "Форматировать JSON"
@@ -64,6 +65,7 @@
   },
   "Codegen": {
     "generate": "Сгенерировать новый код",
+    "generating": "Генерация...",
     "no-generated-code": "Выберите язык и нажмите сгенерировать",
     "no-url-generate": "URL обязателен"
   },
