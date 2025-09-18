@@ -24,7 +24,7 @@ export function useSharedRequest() {
   const [response, setResponse] = useState<unknown>(null);
   const [error, setError] = useState<RequestError>({ api: '', body: '' });
 
-  const updateRequest = (updates: HttpRequest) => {
+  const updateRequest = (updates: Partial<HttpRequest>) => {
     setRequest((prev) => ({ ...prev, ...updates }));
   };
 

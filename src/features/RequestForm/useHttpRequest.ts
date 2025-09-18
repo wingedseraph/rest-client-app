@@ -22,7 +22,7 @@ export const HTML_METHODS = {
 
 type Props = {
   request: HttpRequest;
-  updateRequest: (updates: HttpRequest) => void;
+  updateRequest: (updates: Partial<HttpRequest>) => void;
   setRequestError: (error: RequestError) => void;
   setRequestResponse: (response: unknown) => void;
 };
