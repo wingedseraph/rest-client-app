@@ -1,3 +1,4 @@
+import type { HttpRequest } from '@/features/RequestForm/useHttpRequest';
 import { auth, db } from '@/lib/firebase/client';
 
 import { FirebaseError } from 'firebase/app';
@@ -10,13 +11,21 @@ import {
   type User,
   type UserCredential,
 } from 'firebase/auth';
-import { doc, type Firestore, setDoc } from 'firebase/firestore';
+import {
+  arrayUnion,
+  doc,
+  type Firestore,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 
 interface UserData {
   uid: string;
   name: string;
   authProvider: string;
   email: string;
+  requests?: HttpRequest[];
 }
 
 class FirebaseAuthService {
@@ -111,6 +120,41 @@ class FirebaseAuthService {
 
   getCurrentUser(): User | null {
     return this.auth.currentUser;
+  }
+
+  async saveUserRequest(uid: string, requestData: HttpRequest): Promise<void> {
+    try {
+      const userRef = doc(this.db, 'users', uid);
+
+      await updateDoc(userRef, {
+        requests: arrayUnion({
+          ...requestData,
+        }),
+      });
+    } catch (err: unknown) {
+      throw new Error(`${err}`);
+    }
+  }
+  async getUserDbData(uid: string): Promise<HttpRequest[] | undefined> {
+    try {
+      const userDocRef = doc(this.db, 'users', uid);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        const requests = userDocSnap.data() as UserData;
+        return requests.requests;
+      } else {
+        return undefined;
+      }
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        throw err;
+      }
+      if (err instanceof Error) {
+        throw new Error(`Failed to get user data: ${err.message}`);
+      }
+      throw new Error('Failed to get user data: Unknown error');
+    }
   }
 }
 
