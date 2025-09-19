@@ -28,6 +28,16 @@ class FirebaseAuthService {
     this.db = db;
   }
 
+  private async setToken(user: User): Promise<void> {
+    const token = await user.getIdToken();
+
+    await fetch('/api/set-token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }),
+    });
+  }
+
   async logInWithEmailAndPassword(
     email: string,
     password: string,
@@ -38,6 +48,10 @@ class FirebaseAuthService {
         email,
         password,
       );
+
+      const user = userCredential.user;
+      await this.setToken(user);
+
       return userCredential;
     } catch (err: unknown) {
       if (err instanceof FirebaseError) {
@@ -56,12 +70,11 @@ class FirebaseAuthService {
     password: string,
   ): Promise<User> {
     try {
-      const res: UserCredential = await createUserWithEmailAndPassword(
-        this.auth,
-        email,
-        password,
-      );
-      const user = res.user;
+      const userCredential: UserCredential =
+        await createUserWithEmailAndPassword(this.auth, email, password);
+
+      const user = userCredential.user;
+      await this.setToken(user);
 
       const userData: UserData = {
         uid: user.uid,
