@@ -8,8 +8,8 @@ import {
 
 import type { Locale } from 'next-intl';
 
-export function isLocale(value: string): value is Locale {
-  return routing.locales.includes(value as Locale);
+export function isLocale(value: string | undefined): value is Locale {
+  return value !== undefined && routing.locales.includes(value as Locale);
 }
 
 export function isPublicRoute(path: string): path is PublicRoutes {
