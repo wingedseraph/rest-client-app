@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { Link, useRouter } from '@/i18n/navigation';
 import { getFirebaseErrorMessageKey } from '@/lib/errorHelper';
+import { routes } from '@/lib/routes';
 import { createRegisterSchema, type RegisterFormData } from '@/lib/validation';
 import { firebaseAuthService } from '@/services/authService';
 import { Button } from '@/shared/ui/button';
@@ -39,7 +40,7 @@ export default function Register() {
         data.password,
       );
       if (user) {
-        router.push('/rest-client');
+        router.push(routes.private.REST_CLIENT);
         router.refresh();
       }
     } catch (error: unknown) {
@@ -62,7 +63,7 @@ export default function Register() {
           <p className="mt-2 text-center text-gray-600 text-sm">
             {tForm('or')}{' '}
             <Link
-              href="/login"
+              href={routes.public.LOGIN}
               className="font-medium text-muted-foreground no-underline hover:text-foreground"
             >
               {tForm('log-in')}

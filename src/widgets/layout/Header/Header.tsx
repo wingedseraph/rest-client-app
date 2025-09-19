@@ -2,6 +2,7 @@
 import Link from 'next/link';
 
 import LocaleSwitcher from '@/features/Locale/LocaleSwitcher';
+import { routes } from '@/lib/routes';
 import { cn } from '@/lib/utils';
 import useScroll from '@/shared/hooks/useScroll';
 
@@ -11,8 +12,8 @@ export default function Header() {
   const t = useTranslations('Header');
 
   const navLinks = [
-    { label: t('signIn'), href: '/login' },
-    { label: t('signUp'), href: '/register' },
+    { label: t('signIn'), href: routes.public.LOGIN },
+    { label: t('signUp'), href: routes.public.REGISTER },
   ];
   const { sticky, headerRef } = useScroll<HTMLDivElement>();
 
@@ -25,7 +26,7 @@ export default function Header() {
       )}
     >
       <div className="flex flex-row items-center">
-        <Link href="/" className="flex flex-row items-center">
+        <Link href={routes.public.HOME} className="flex flex-row items-center">
           <p>
             &#123; REST<span className="font-serif italic">ful</span>API &#125;
           </p>
