@@ -3,8 +3,10 @@
     "title": "REST Client",
     "description": "An application REST Client for the RS School education process"
   },
-  "Hello": {
-    "title": "Hello World"
+  "Home": {
+    "project": "Our project is a minimalistic REST client inspired by Postman. It allows users to easily send HTTP requests with support for various methods (GET, POST, PUT, etc.), custom URLs, headers, and request bodies in JSON or form-data. Key features include a real-time response viewer with status codes and formatting, automatic code generation in  cURL, JavaScript, or etc, a history of recent requests for quick access, and environment variables for dynamic data replacement.",
+    "course": "This project was built as part of a comprehensive React course that took us from zero to hero. Starting from the basics like components, props, and state, we progressed to advanced topics: hooks (useState, useEffect, custom hooks), App routing with Next.js, sync state management with Context or Redux & Zustand, async state manager with RTK Query & Tanstack Query, Firebase API integration, and internationalization with next-intl. The course covered best practices for building scalable UIs, testing with Vitest & Jest, and deploying to Netlify & Vercel — a full journey from beginner concepts to production-ready apps.",
+    "developers": "The project was developed by a talented team of three: Nikolai, the frontend lead who handled React components and UI/UX design; Diana, the backend specialist focusing on API mocking and data persistence; and Alexey, the full-stack integrator who tied everything together with TypeScript and optimization. Together, we collaborated via GitHub, iterating on feedback to create a awesome tool."
   },
   "About": {
     "title": "About This App",

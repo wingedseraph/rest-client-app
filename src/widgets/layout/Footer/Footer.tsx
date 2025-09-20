@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="sticky bottom-0 left-0 z-0 w-full bg-foreground text-background">
       <div className="flex h-fit w-full items-center justify-center md:h-80">
         <div className="relative flex h-full w-full items-start justify-end overflow-hidden py-12 text-right">
-          <div className="flex flex-row space-x-12 text-xl leading-4 sm:space-x-16 sm:text-lg md:space-x-24 md:leading-8">
+          <div className="flex flex-row space-x-12 sm:flex-row sm:gap-8 sm:space-x-16 sm:text-base md:gap-12 md:space-x-24 md:text-lg lg:gap-16 xl:gap-24">
             <ul className="flex w-fit flex-col gap-0 text-left sm:gap-2">
               <Link
                 href="/rest-client"
