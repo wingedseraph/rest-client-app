@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "title": "REST Client",
+    "description": "An application REST Client for the RS School education process"
+  },
   "Hello": {
     "title": "Hello World"
   },

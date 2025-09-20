@@ -1,5 +1,5 @@
 export const getFirebaseErrorMessageKey = (errorCode: string): string => {
-  const knownCodes: Record<string, true> = {
+  const knownCodes: Record<PropertyKey, true> = {
     'auth/user-not-found': true,
     'auth/email-already-in-use': true,
     'auth/wrong-password': true,
