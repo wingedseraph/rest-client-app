@@ -16,7 +16,8 @@
     "home": "Home",
     "about": "About",
     "signIn": "Login",
-    "signUp": "Register"
+    "signUp": "Register",
+    "logout": "Logout"
   },
   "Footer": {
     "client": "/client",
