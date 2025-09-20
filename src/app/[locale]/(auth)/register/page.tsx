@@ -8,7 +8,7 @@ import { routes } from '@/lib/routes';
 import { createRegisterSchema, type RegisterFormData } from '@/lib/validation';
 import { firebaseAuthService } from '@/services/authService';
 import { useUser } from '@/shared/hooks/useUser';
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/Button/button';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';

@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from 'react';
 
 import { Link, useRouter } from '@/i18n/navigation';
@@ -7,7 +8,7 @@ import { routes } from '@/lib/routes';
 import { type AuthFormData, createAuthSchema } from '@/lib/validation';
 import { firebaseAuthService } from '@/services/authService';
 import { useUser } from '@/shared/hooks/useUser';
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/Button/button';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';

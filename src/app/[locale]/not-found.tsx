@@ -15,7 +15,7 @@ export default function NotFoundPage() {
       </p>
       <Link
         href="/"
-        className="rounded-lg bg-blue-600 px-6 py-2 font-medium text-background transition hover:bg-blue-700"
+        className="rounded-lg bg-foreground px-6 py-2 font-medium text-background no-underline transition hover:scale-105"
       >
         {t('back')}
       </Link>
