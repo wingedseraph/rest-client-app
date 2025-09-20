@@ -7,6 +7,7 @@ import Footer from '@/widgets/layout/Footer/Footer';
 import Header from '@/widgets/layout/Header/Header';
 
 import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -18,10 +19,23 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-export const metadata: Metadata = {
-  title: 'rest-client',
-  description: 'An application REST Client for the RS School education process',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const messages: Record<
+    PropertyKey,
+    Record<PropertyKey, string>
+  > = await getMessages({ locale });
+  const title = messages.metadata.title;
+  const description = messages.metadata.description;
+
+  return {
+    title: {
+      template: `%s | ${title}`,
+      default: title,
+    },
+    description,
+  };
+}
 
 type LocaleLayoutParams = {
   params: Promise<{ locale: string }>;

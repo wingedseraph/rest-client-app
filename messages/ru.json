@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "title": "REST Клиент",
+    "description": "Приложение REST-клиент для образовательных целей RS School"
+  },
   "Hello": {
     "title": "Привет, мир"
   },
