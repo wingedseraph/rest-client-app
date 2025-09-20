@@ -11,8 +11,8 @@ export default function Home({ params }: PageProps<'/[locale]'>) {
   const t = useTranslations('Home');
 
   return (
-    <div className="flex flex-col gap-4 text-foreground text-lg sm:text-2xl lg:text-3xl">
-      <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+    <div className="flex flex-col gap-4 text-foreground text-lg sm:text-2xl lg:text-3xl lg:leading-12">
+      <div className="gap:8 flex flex-col items-center justify-between sm:flex-row sm:gap-4">
         <p className="text-center sm:text-left"> {t('project')}</p>
         <Image
           src="/bread-walk.jpg"
@@ -30,7 +30,7 @@ export default function Home({ params }: PageProps<'/[locale]'>) {
           height={100}
           className="h-auto w-full max-w-sm sm:order-none sm:max-w-md lg:max-w-lg"
         />
-        <p className="sm:order-none sm:text-right"> {t('course')}</p>
+        <p> {t('course')}</p>
       </div>
       <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
         <p className="text-center sm:text-left"> {t('developers')}</p>
