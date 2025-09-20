@@ -7,6 +7,7 @@ import { getFirebaseErrorMessageKey } from '@/lib/errorHelper';
 import { routes } from '@/lib/routes';
 import { createRegisterSchema, type RegisterFormData } from '@/lib/validation';
 import { firebaseAuthService } from '@/services/authService';
+import { useUser } from '@/shared/hooks/useUser';
 import { Button } from '@/shared/ui/button';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -29,6 +30,7 @@ export default function Register() {
 
   const [firebaseError, setFirebaseError] = useState<string>('');
   const router = useRouter();
+  const { mutateUser } = useUser();
 
   const onSubmit = async (data: RegisterFormData) => {
     setFirebaseError('');
@@ -41,6 +43,7 @@ export default function Register() {
       );
       if (user) {
         router.push(routes.private.REST_CLIENT);
+        mutateUser(user);
         router.refresh();
       }
     } catch (error: unknown) {
