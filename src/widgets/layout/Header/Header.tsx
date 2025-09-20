@@ -18,14 +18,14 @@ export default function Header() {
   const handleLogout = async () => {
     await firebaseAuthService.logout();
     mutateUser(null, { revalidate: false });
-    router.push(routes.public.LOGIN);
+    router.push(routes.MAIN);
   };
 
   const navLinks: NavLink[] = user
     ? [
         {
           label: t('logout'),
-          href: routes.public.LOGIN,
+          href: routes.MAIN,
           onClick: handleLogout,
         },
       ]
@@ -45,7 +45,7 @@ export default function Header() {
       )}
     >
       <div className="flex flex-row items-center">
-        <Link href={routes.public.HOME} className="flex flex-row items-center">
+        <Link href={routes.MAIN} className="flex flex-row items-center">
           <p>
             &#123; REST<span className="font-serif italic">ful</span>API &#125;
           </p>
