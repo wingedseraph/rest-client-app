@@ -20,6 +20,14 @@ export const HTML_METHODS = {
   DELETE: { id: 5, value: 'DELETE' },
 } as const;
 
+export const LOCAL_STORAGE_KEY = 'REST::CLIENT::VARIABLES' as const;
+
+export type Variable = {
+  id: string;
+  key: string;
+  value: string;
+};
+
 type Props = {
   request: HttpRequest;
   updateRequest: (updates: Partial<HttpRequest>) => void;
