@@ -60,7 +60,7 @@ export default function middleware(request: NextRequest) {
 
   if (isPrivateRoute(cleanPath) && !token) {
     const targetUrl = new URL(
-      `/${currentLocale}${routes.public.LOGIN}`,
+      `/${currentLocale}${routes.public.HOME}`,
       request.url,
     );
 

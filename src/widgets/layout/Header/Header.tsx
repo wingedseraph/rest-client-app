@@ -18,14 +18,14 @@ export default function Header() {
   const handleLogout = async () => {
     await firebaseAuthService.logout();
     mutateUser(null, { revalidate: false });
-    router.push(routes.public.LOGIN);
+    router.push(routes.public.HOME);
   };
 
   const navLinks: NavLink[] = user
     ? [
         {
           label: t('logout'),
-          href: routes.public.LOGIN,
+          href: routes.public.HOME,
           onClick: handleLogout,
         },
       ]
