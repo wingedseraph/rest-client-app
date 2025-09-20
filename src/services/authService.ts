@@ -110,8 +110,23 @@ class FirebaseAuthService {
     }
   }
 
-  logout(): void {
-    signOut(this.auth);
+  async logout(): Promise<void> {
+    try {
+      await signOut(this.auth);
+
+      await fetch('/api/unset-token', {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        throw err;
+      }
+      if (err instanceof Error) {
+        throw new Error(`Logout failed: ${err.message}`);
+      }
+      throw new Error('Logout failed: Unknown error');
+    }
   }
 
   getAuthInstance(): Auth {
