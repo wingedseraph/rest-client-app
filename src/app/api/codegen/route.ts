@@ -10,7 +10,7 @@ const GENERATOR_OPTIONS = {
   indentType: 'Space',
   trimRequestBody: true,
   followRedirect: true,
-};
+} as const;
 
 export async function POST(request: Request) {
   const clientData: RequestData & { language: string; variant: string } =
