@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/Button/button';
 
 import { HTML_METHODS } from './useHttpRequest';
 import type { HttpRequest } from './useSharedRequest';

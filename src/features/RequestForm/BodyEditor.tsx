@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/Button/button';
 
 import type { HttpRequest } from './useSharedRequest';
 import { useTranslations } from 'next-intl';

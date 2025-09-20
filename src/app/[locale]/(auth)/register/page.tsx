@@ -6,7 +6,7 @@ import { Link, useRouter } from '@/i18n/navigation';
 import { getFirebaseErrorMessageKey } from '@/lib/errorHelper';
 import { createRegisterSchema, type RegisterFormData } from '@/lib/validation';
 import { firebaseAuthService } from '@/services/authService';
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/Button/button';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
