@@ -51,6 +51,7 @@
     "response": "Response",
     "button": {
       "request": "Request",
+      "request-loading": "Requesting...",
       "remove": "Remove",
       "addHeader": "Add Header",
       "prettifyJson": "Prettify JSON"
@@ -68,6 +69,12 @@
       "wrongBody": "Wrong JSON",
       "requestUnknown": "Unknown"
     }
+  },
+  "Codegen": {
+    "generate": "Generate new snippet",
+    "generating": "Generating...",
+    "no-generated-code": "Select a language and click generate",
+    "no-url-generate": "URL is required"
   },
   "FormDataAndErrors": {
     "email-required": "Email is required",

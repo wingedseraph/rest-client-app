@@ -1,27 +1,41 @@
 import { useCallback, useState } from 'react';
 
-import { Button } from '@/shared/ui/Button/button';
+import { Button } from '@/shared/ui/button';
 
-import type { HttpRequest } from './useHttpRequest';
+import type { HttpRequest } from './useSharedRequest';
 import { useTranslations } from 'next-intl';
 
 type Props = {
   method: HttpRequest['method'];
   defaultBody: string;
   bodyError?: string;
+  onBodyChange: (body: string) => void;
 };
 
-export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
+export default function BodyEditor({
+  method,
+  defaultBody,
+  bodyError,
+  onBodyChange,
+}: Props) {
   const t = useTranslations('RequestForm');
-  const [requestBody, setRequestBody] = useState(defaultBody);
+  const [body, setBody] = useState(defaultBody);
+
+  const handleBodyChange = useCallback(
+    (newBody: string) => {
+      setBody(newBody);
+      onBodyChange(newBody);
+    },
+    [onBodyChange],
+  );
 
   const prettifyJson = useCallback(() => {
-    if (!requestBody) return;
+    if (!body) return;
     try {
-      const parsed = JSON.parse(requestBody);
-      setRequestBody(JSON.stringify(parsed, null, 2));
+      const parsed = JSON.parse(body);
+      handleBodyChange(JSON.stringify(parsed, null, 2));
     } catch {}
-  }, [requestBody]);
+  }, [body, handleBodyChange]);
 
   if (!['POST', 'PUT', 'PATCH'].includes(method)) return null;
   return (
@@ -37,7 +51,7 @@ export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
           onClick={prettifyJson}
           type="button"
           variant="ghost"
-          disabled={!requestBody}
+          disabled={!body}
           className="text-foreground text-sm no-underline hover:bg-foreground hover:text-background disabled:opacity-50"
         >
           {t('button.prettifyJson')}
@@ -46,8 +60,8 @@ export default function BodyEditor({ method, defaultBody, bodyError }: Props) {
       <textarea
         id="request-body"
         name="body"
-        value={requestBody}
-        onChange={(e) => setRequestBody(e.target.value)}
+        value={body}
+        onChange={(e) => handleBodyChange(e.target.value)}
         className="w-full rounded-md border border-gray-300 px-3 py-2 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
         rows={8}
         placeholder='{"key": "value"}'

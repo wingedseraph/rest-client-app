@@ -1,23 +1,7 @@
 import { type FormEvent, useState } from 'react';
 
-import { useLocalStorage } from '../Variables/useLocalStorage';
+import type { HttpRequest, RequestError } from './useSharedRequest';
 import { useTranslations } from 'next-intl';
-
-export type HttpRequest = {
-  url: string;
-  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-  headers?: Record<string, string>;
-  body?: string;
-  name?: string;
-};
-
-export type Variable = {
-  id: string;
-  key: string;
-  value: string;
-};
-
-export const LOCAL_STORAGE_KEY = 'REST::CLIENT::VARIABLES' as const;
 
 const isJsonString = (str: string) => {
   try {
@@ -28,14 +12,6 @@ const isJsonString = (str: string) => {
   return true;
 };
 
-const interpolateVariables = (text: string, variables: Variable[]): string => {
-  return variables.reduce((acc, variable) => {
-    const regex = new RegExp(`\\{\\{${variable.key}\\}\\}`, 'g');
-
-    return acc.replace(regex, variable.value);
-  }, text);
-};
-
 export const HTML_METHODS = {
   GET: { id: 1, value: 'GET' },
   POST: { id: 2, value: 'POST' },
@@ -44,76 +20,56 @@ export const HTML_METHODS = {
   DELETE: { id: 5, value: 'DELETE' },
 } as const;
 
-export function useHttpRequest() {
+type Props = {
+  request: HttpRequest;
+  updateRequest: (updates: Partial<HttpRequest>) => void;
+  setRequestError: (error: RequestError) => void;
+  setRequestResponse: (response: unknown) => void;
+};
+
+export function useHttpRequest({
+  request,
+  updateRequest,
+  setRequestError,
+  setRequestResponse,
+}: Props) {
   const t = useTranslations('RequestForm');
-  const [variables] = useLocalStorage<Variable[]>(LOCAL_STORAGE_KEY, []);
-
-  const [request, setRequest] = useState<HttpRequest>({
-    url: 'https://dummyjson.com/test',
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    body: '',
-    name: '',
-  });
-  const [currentMethod, setCurrentMethod] =
-    useState<HttpRequest['method']>('GET');
-  const [response, setResponse] = useState<unknown>(null);
-  const [error, setError] = useState({ api: '', body: '' });
-
-  const addHeader = (key: string, value: string) => {
-    if (!key || !value) return;
-    setRequest((prev) => ({
-      ...prev,
-      headers: { ...prev.headers, [key]: value },
-    }));
-  };
-
-  const removeHeader = (key: string) => {
-    const newHeaders = { ...(request.headers || {}) };
-    delete newHeaders[key];
-    setRequest((prev) => ({ ...prev, headers: newHeaders }));
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setError({ api: '', body: '' });
+    setRequestError({ api: '', body: '' });
 
     const form = new FormData(event.currentTarget);
     const url = (form.get('url') || '').toString().trim();
     const method = (
       form.get('method') || 'GET'
     ).toString() as HttpRequest['method'];
-
     const body = (form.get('body') || '').toString();
-
-    const modifiedUrl = interpolateVariables(url, variables);
-    const modifiedHeaders: HttpRequest['headers'] = {};
-    const modifiedBody = interpolateVariables(body, variables);
 
     if (
       ['POST', 'PUT', 'PATCH'].includes(method) &&
-      modifiedBody &&
-      !isJsonString(modifiedBody)
+      body &&
+      !isJsonString(body)
     ) {
-      setError((prev) => ({ ...prev, body: t('error.wrongBody') }));
+      setRequestError({ api: '', body: t('error.wrongBody') });
       return;
     }
 
-    const encodedUrl = btoa(modifiedUrl);
+    updateRequest({ url, method, body });
+
+    const encodedUrl = btoa(url);
     let apiUrl = `/api/${method}/${encodedUrl}`;
 
-    if (modifiedBody && ['POST', 'PUT', 'PATCH'].includes(method)) {
-      const encodedBody = btoa(modifiedBody);
+    if (body && ['POST', 'PUT', 'PATCH'].includes(method)) {
+      const encodedBody = btoa(body);
       apiUrl += `/${encodedBody}`;
     }
 
     const queryParams = new URLSearchParams();
     Object.entries(request.headers || {}).forEach(([key, value]) => {
-      const interpolateValue = interpolateVariables(value ?? '', variables);
-
-      modifiedHeaders[key] = interpolateValue;
-      queryParams.append(key, encodeURIComponent(interpolateValue));
+      queryParams.append(key, encodeURIComponent(value));
     });
 
     if (queryParams.toString()) {
@@ -124,43 +80,37 @@ export function useHttpRequest() {
     window.history.pushState({}, '', displayUrl);
 
     const modifiedRequest: HttpRequest = {
-      url: modifiedUrl,
+      url,
       method,
-      headers: modifiedHeaders,
-      body: modifiedBody ? JSON.parse(modifiedBody) : '',
-      name: request.name || '',
+      headers: request.headers,
+      body: body ? JSON.parse(body) : '',
     };
 
     try {
-      const interpolateHeaders = Object.fromEntries(
-        Object.entries(request.headers || {}).map(([key, value]) => [
-          key,
-          interpolateVariables(value, variables),
-        ]),
-      );
-
+      setIsLoading(true);
       const response = await fetch('/api/request', {
         method: 'POST',
-        headers: interpolateHeaders,
+        headers: Object.fromEntries(
+          Object.entries(request.headers || {}).map(([key, value]) => [
+            key,
+            value,
+          ]),
+        ),
         body: JSON.stringify(modifiedRequest),
       });
       const data = await response.json();
-      setResponse(data);
+      setRequestResponse(data);
     } catch {
-      setResponse({
+      setRequestResponse({
         error: 'Wrong Request',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return {
-    request,
-    currentMethod,
-    setCurrentMethod,
-    response,
-    error,
-    addHeader,
-    removeHeader,
     handleSubmit,
+    isLoading,
   };
 }
