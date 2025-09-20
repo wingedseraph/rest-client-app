@@ -59,10 +59,7 @@ export default function middleware(request: NextRequest) {
   }
 
   if (isPrivateRoute(cleanPath) && !token) {
-    const targetUrl = new URL(
-      `/${currentLocale}${routes.public.HOME}`,
-      request.url,
-    );
+    const targetUrl = new URL(`/${currentLocale}${routes.MAIN}`, request.url);
 
     if (request.nextUrl.pathname !== targetUrl.pathname) {
       return NextResponse.redirect(targetUrl);
