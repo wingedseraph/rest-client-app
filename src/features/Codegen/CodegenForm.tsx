@@ -2,7 +2,13 @@
 
 import { useState } from 'react';
 
+import {
+  LOCAL_STORAGE_KEY,
+  type Variable,
+} from '@/features/RequestForm/useHttpRequest';
 import type { HttpRequest } from '@/features/RequestForm/useSharedRequest';
+import { interpolateData } from '@/lib/interpolateVariables';
+import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 
 import CodegenHeader from './CodegenHeader';
 import { type CodegenData, GENERATOR_LANG, type Lang } from './CodegenUtils';
@@ -17,6 +23,18 @@ export default function CodegenForm({ request }: { request: HttpRequest }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [selectedLang, setSelectedLang] = useState<Lang>('curl');
+  const [variables] = useLocalStorage<Variable[]>(LOCAL_STORAGE_KEY, []);
+
+  const {
+    url: finalUrl,
+    body: finalBody,
+    headers: finalHeaders,
+  } = interpolateData(
+    request.url,
+    request.body,
+    request.headers || {},
+    variables,
+  );
 
   const handleLanguageChange = (lang: Lang) => {
     setSelectedLang(lang);
@@ -38,9 +56,9 @@ export default function CodegenForm({ request }: { request: HttpRequest }) {
         },
         body: JSON.stringify({
           method: request.method,
-          url: request.url,
-          headers: request.headers,
-          body: request.body,
+          url: finalUrl,
+          headers: finalHeaders,
+          body: finalBody,
           language: GENERATOR_LANG[selectedLang].language,
           variant: GENERATOR_LANG[selectedLang].variant,
         }),

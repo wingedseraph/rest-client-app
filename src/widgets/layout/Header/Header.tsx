@@ -2,8 +2,8 @@
 
 import LocaleSwitcher from '@/features/Locale/LocaleSwitcher';
 import { Link } from '@/i18n/navigation';
-import useScroll from '@/lib/useScroll';
 import { cn } from '@/lib/utils';
+import useScroll from '@/shared/hooks/useScroll';
 
 import { useTranslations } from 'next-intl';
 

@@ -4,7 +4,7 @@ import {
   LOCAL_STORAGE_KEY,
   type Variable,
 } from '@/features/RequestForm/useHttpRequest';
-import { useLocalStorage } from '@/lib/useLocalStorage';
+import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 
 import { useTranslations } from 'next-intl';
 

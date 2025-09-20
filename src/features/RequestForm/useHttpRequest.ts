@@ -1,5 +1,8 @@
 import { type FormEvent, useState } from 'react';
 
+import { interpolateData } from '@/lib/interpolateVariables';
+import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
+
 import type { HttpRequest, RequestError } from './useSharedRequest';
 import { useTranslations } from 'next-intl';
 
@@ -44,6 +47,8 @@ export function useHttpRequest({
   const t = useTranslations('RequestForm');
   const [isLoading, setIsLoading] = useState(false);
 
+  const [variables] = useLocalStorage<Variable[]>(LOCAL_STORAGE_KEY, []);
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -67,16 +72,22 @@ export function useHttpRequest({
 
     updateRequest({ url, method, body });
 
-    const encodedUrl = btoa(url);
+    const {
+      url: finalUrl,
+      body: finalBody,
+      headers: finalHeaders,
+    } = interpolateData(url, body, request.headers || {}, variables);
+
+    const encodedUrl = btoa(finalUrl);
     let apiUrl = `/api/${method}/${encodedUrl}`;
 
-    if (body && ['POST', 'PUT', 'PATCH'].includes(method)) {
-      const encodedBody = btoa(body);
+    if (finalBody && ['POST', 'PUT', 'PATCH'].includes(method)) {
+      const encodedBody = btoa(finalBody);
       apiUrl += `/${encodedBody}`;
     }
 
     const queryParams = new URLSearchParams();
-    Object.entries(request.headers || {}).forEach(([key, value]) => {
+    Object.entries(finalHeaders).forEach(([key, value]) => {
       queryParams.append(key, encodeURIComponent(value));
     });
 
@@ -88,22 +99,17 @@ export function useHttpRequest({
     window.history.pushState({}, '', displayUrl);
 
     const modifiedRequest: HttpRequest = {
-      url,
+      url: finalUrl,
       method,
-      headers: request.headers,
-      body: body ? JSON.parse(body) : '',
+      headers: finalHeaders,
+      body: finalBody ? JSON.parse(finalBody) : '',
     };
 
     try {
       setIsLoading(true);
       const response = await fetch('/api/request', {
         method: 'POST',
-        headers: Object.fromEntries(
-          Object.entries(request.headers || {}).map(([key, value]) => [
-            key,
-            value,
-          ]),
-        ),
+        headers: finalHeaders,
         body: JSON.stringify(modifiedRequest),
       });
       const data = await response.json();
