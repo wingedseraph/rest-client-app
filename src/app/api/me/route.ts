@@ -6,8 +6,14 @@ export async function GET() {
   const token = cookieStore.get('authToken')?.value;
 
   if (!token) {
-    return NextResponse.json({ user: null }, { status: 401 });
+    return NextResponse.json(
+      { user: null, info: 'User is not authenticated' },
+      { status: 200 },
+    );
   }
 
-  return NextResponse.json({ user: { token } }, { status: 200 });
+  return NextResponse.json(
+    { user: { token }, info: 'User is authenticated' },
+    { status: 200 },
+  );
 }
