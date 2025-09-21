@@ -5,9 +5,11 @@ export const requestSchema = z.object({
   method: z.string(),
   headers: z.record(z.string(), z.string()).optional(),
   body: z.union([z.object(), z.string()]).optional(),
+
   size: z.number(),
   duration: z.number(),
   timestamp: z.string(),
+
 });
 
 export const responseSchema = z.object({

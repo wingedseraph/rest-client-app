@@ -1,13 +1,56 @@
-import { use } from 'react';
+'use client';
 
-import { type Locale, useTranslations } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
+import Image from 'next/image';
 
-export default function Home({ params }: PageProps<'/[locale]'>) {
-  const { locale } = use(params);
-  setRequestLocale(locale as Locale);
+import { UnderlineText } from '@/shared/ui/Underline/underline';
 
-  const t = useTranslations('Hello');
+import { useTranslations } from 'next-intl';
 
-  return <p>{t('title')}</p>;
+export default function Home() {
+  const t = useTranslations('Home');
+
+  return (
+    <div className="flex flex-col gap-4 text-base text-foreground sm:text-kg lg:text-xl lg:leading-8">
+      <div className="flex flex-col items-center justify-between sm:flex-row">
+        <p className="text-center sm:text-left"> {t('project')}</p>
+        <Image
+          src="/bread-walk.jpg"
+          alt="bread-walk"
+          width={360}
+          height={360}
+          className="h-auto w-full max-w-sm sm:max-w-md lg:max-w-lg"
+          priority
+        />
+      </div>
+
+      <div className="flex flex-col items-center justify-end sm:flex-row sm:justify-center">
+        <p className="order-1 sm:order-2">{t('course')}</p>
+        <Image
+          src="/bread-green.jpg"
+          alt="bread-hardtime"
+          width={512}
+          height={512}
+          className="order-2 h-auto w-full max-w-sm sm:order-1 sm:max-w-md lg:max-w-lg"
+          priority
+        />
+      </div>
+
+      <div className="flex flex-col items-center justify-between sm:flex-row">
+        <p className="text-center sm:text-left">
+          {t.rich('developers', {
+            underline: UnderlineText,
+          })}
+        </p>
+
+        <Image
+          src="/bread-team-cats.jpg"
+          alt="bread-team-cats"
+          width={512}
+          height={512}
+          className="h-auto w-full max-w-sm sm:max-w-md lg:max-w-lg"
+          priority
+        />
+      </div>
+    </div>
+  );
 }
