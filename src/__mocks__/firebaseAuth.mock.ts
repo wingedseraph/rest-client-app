@@ -3,7 +3,10 @@ vi.mock('firebase/auth', async () => {
     await vi.importActual<typeof import('firebase/auth')>('firebase/auth');
   return {
     ...actual,
-    getAuth: vi.fn(() => ({ currentUser: null })),
+    getAuth: vi.fn(() => ({
+      currentUser: null,
+      onAuthStateChanged: vi.fn(() => () => {}),
+    })),
     signInWithEmailAndPassword: vi.fn(),
     createUserWithEmailAndPassword: vi.fn(),
     sendPasswordResetEmail: vi.fn(),
