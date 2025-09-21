@@ -18,6 +18,9 @@ export function useSharedRequest() {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
     body: '',
+    size: 0,
+    duration: 0,
+    timestamp: '',
   });
   const [currentMethod, setCurrentMethod] =
     useState<HttpRequest['method']>('GET');

@@ -1,10 +1,24 @@
 import { type FormEvent, useState } from 'react';
 
+import type { RequestError } from '@/features/RequestForm/useSharedRequest';
+import { auth } from '@/lib/firebase/client';
 import { interpolateData } from '@/lib/interpolateVariables';
+import { firebaseAuthService } from '@/services/authService';
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 
-import type { HttpRequest, RequestError } from './useSharedRequest';
 import { useTranslations } from 'next-intl';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+export type HttpRequest = {
+  url: string;
+  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  headers?: Record<string, string>;
+  body?: string | undefined | Record<string, never>;
+  name?: string;
+  size: number;
+  duration: number;
+  timestamp: string;
+};
 
 const isJsonString = (str: string) => {
   try {
@@ -46,11 +60,19 @@ export function useHttpRequest({
 }: Props) {
   const t = useTranslations('RequestForm');
   const [isLoading, setIsLoading] = useState(false);
+  const [user] = useAuthState(auth);
+
+  const getStringSizeInBytes = (str: string): number => {
+    return new Blob([str]).size;
+  };
 
   const [variables] = useLocalStorage<Variable[]>(LOCAL_STORAGE_KEY, []);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const start = Date.now();
+    const date = new Date(start);
+    const localeString = date.toLocaleString();
 
     setRequestError({ api: '', body: '' });
 
@@ -82,7 +104,9 @@ export function useHttpRequest({
     let apiUrl = `/api/${method}/${encodedUrl}`;
 
     if (finalBody && ['POST', 'PUT', 'PATCH'].includes(method)) {
-      const encodedBody = btoa(finalBody);
+      const encodedBody = btoa(
+        typeof finalBody === 'string' ? finalBody : JSON.stringify(finalBody),
+      );
       apiUrl += `/${encodedBody}`;
     }
 
@@ -98,22 +122,52 @@ export function useHttpRequest({
     const displayUrl = apiUrl.replace('/api', '');
     window.history.pushState({}, '', displayUrl);
 
-    const modifiedRequest: HttpRequest = {
-      url: finalUrl,
-      method,
-      headers: finalHeaders,
-      body: finalBody ? JSON.parse(finalBody) : {},
-    };
+    const requestBody = finalBody
+      ? typeof finalBody === 'string'
+        ? JSON.parse(finalBody)
+        : finalBody
+      : '';
+    const requestPayloadSize = getStringSizeInBytes(
+      JSON.stringify({
+        url: finalUrl,
+        method,
+        headers: finalHeaders,
+        body: requestBody,
+      }),
+    );
 
     try {
       setIsLoading(true);
       const response = await fetch('/api/request', {
         method: 'POST',
         headers: finalHeaders,
-        body: JSON.stringify(modifiedRequest),
+        body: JSON.stringify({
+          url: finalUrl,
+          method,
+          headers: finalHeaders,
+          body: requestBody,
+          size: requestPayloadSize,
+          duration: 0,
+          timestamp: localeString,
+        }),
       });
       const data = await response.json();
-      setRequestResponse(data);
+      const duration = Date.now() - start;
+
+      const modifiedRequest: HttpRequest = {
+        url: finalUrl,
+        method,
+        headers: finalHeaders,
+        body: requestBody,
+        size: requestPayloadSize,
+        duration,
+        timestamp: localeString,
+      };
+
+      setRequestResponse({ ...data, requestDuration: duration });
+      if (user) {
+        await firebaseAuthService.saveUserRequest(user.uid, modifiedRequest);
+      }
     } catch {
       setRequestResponse({
         error: 'Wrong Request',
@@ -122,7 +176,6 @@ export function useHttpRequest({
       setIsLoading(false);
     }
   };
-
   return {
     handleSubmit,
     isLoading,

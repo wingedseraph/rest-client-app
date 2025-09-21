@@ -118,5 +118,15 @@
     "auth/too-many-requests": "Too many tries. Please try later",
     "auth/user-disabled": "Account is blocked",
     "unknown": "Unknown error"
+  },
+  "History": {
+    "title": "Request History",
+    "noRequests": "No requests found in your history.",
+    "url": "URL",
+    "body": "Body",
+    "time": "Time",
+    "duration": "Duration",
+    "size": "Size",
+    "error": "Error loading request history. Please try again later. Error:"
   }
 }

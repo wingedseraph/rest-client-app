@@ -1,3 +1,4 @@
+import type { HttpRequest } from '@/features/RequestForm/useHttpRequest';
 import { auth, db } from '@/lib/firebase/client';
 
 import { FirebaseError } from 'firebase/app';
@@ -10,13 +11,22 @@ import {
   type User,
   type UserCredential,
 } from 'firebase/auth';
-import { doc, type Firestore, setDoc } from 'firebase/firestore';
+import {
+  arrayUnion,
+  doc,
+  type Firestore,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 
 interface UserData {
   uid: string;
   name: string;
   authProvider: string;
   email: string;
+  requests?: HttpRequest[];
+  authToken?: string;
 }
 
 class FirebaseAuthService {
@@ -36,6 +46,13 @@ class FirebaseAuthService {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token }),
     });
+    await setDoc(
+      doc(this.db, 'users', user.uid),
+      {
+        authToken: token,
+      },
+      { merge: true },
+    );
   }
 
   async logInWithEmailAndPassword(
@@ -139,6 +156,27 @@ class FirebaseAuthService {
 
   getCurrentUser(): User | null {
     return this.auth.currentUser;
+  }
+
+  async saveUserRequest(uid: string, requestData: HttpRequest): Promise<void> {
+    try {
+      const userRef = doc(this.db, 'users', uid);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        await updateDoc(userRef, {
+          requests: arrayUnion({
+            ...requestData,
+          }),
+        });
+      } else {
+        await setDoc(userRef, {
+          requests: [requestData],
+        });
+      }
+    } catch (err: unknown) {
+      throw new Error(`${err}`);
+    }
   }
 }
 
