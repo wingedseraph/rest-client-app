@@ -4,15 +4,28 @@ import { useHttpRequest } from '@/features/RequestForm/useHttpRequest';
 import type { HttpRequest } from '@/features/RequestForm/useSharedRequest';
 
 import { act, renderHook } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  type Mock,
+  test,
+  vi,
+} from 'vitest';
 
 const originalFetch = global.fetch;
+const originalDateNow = Date.now;
+
 beforeEach(() => {
   global.fetch = vi.fn();
+  let mockTime = 1000;
+  Date.now = vi.fn(() => mockTime++);
 });
 
 afterEach(() => {
   global.fetch = originalFetch;
+  Date.now = originalDateNow;
 });
 
 vi.mock('next-intl', () => ({
@@ -34,6 +47,20 @@ vi.mock('@/lib/interpolateVariables', () => ({
     body,
     headers,
   })),
+}));
+
+vi.mock('@/lib/firebase/client', () => ({
+  auth: {} as import('firebase/auth').Auth,
+}));
+
+vi.mock('react-firebase-hooks/auth', () => ({
+  useAuthState: vi.fn().mockReturnValue([null, false, null]),
+}));
+
+vi.mock('@/services/authService', () => ({
+  firebaseAuthService: {
+    saveUserRequest: vi.fn(),
+  },
 }));
 
 const getMockProps = () => ({
@@ -63,9 +90,7 @@ const getMockEvent = () => {
 
 describe('useHttpRequest', () => {
   test('should handle fetch error', async () => {
-    (global.fetch as jest.Mock).mockRejectedValueOnce(
-      new Error('Wrong Request'),
-    );
+    (global.fetch as Mock).mockRejectedValueOnce(new Error('Wrong Request'));
 
     const mockProps = getMockProps();
 
@@ -84,7 +109,7 @@ describe('useHttpRequest', () => {
   });
 
   test('should handle successful request', async () => {
-    (global.fetch as jest.Mock).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       ok: true,
       json: () => Promise.resolve({ success: true }),
     });
@@ -100,6 +125,7 @@ describe('useHttpRequest', () => {
     });
 
     expect(mockProps.setRequestResponse).toHaveBeenCalledWith({
+      requestDuration: 1,
       success: true,
     });
   });
