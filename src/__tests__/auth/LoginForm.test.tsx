@@ -1,4 +1,4 @@
-import { mockAuthService } from '@/__mocks__/firebaseAuthService.mock';
+import { AuthService } from '@/__mocks__/authService.mock';
 import { mockNextNavigation } from '@/__mocks__/nextNavigation.mock';
 import { renderWithIntl } from '@/__mocks__/renderWithIntl';
 import { createMockUser } from '@/__mocks__/user.mock';
@@ -10,7 +10,7 @@ import type { UserCredential } from 'firebase/auth';
 import { vi } from 'vitest';
 
 vi.mock('@/services/authService', () => ({
-  firebaseAuthService: mockAuthService,
+  firebaseAuthService: AuthService,
 }));
 mockNextNavigation();
 
