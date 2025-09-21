@@ -13,7 +13,7 @@ export type HttpRequest = {
   url: string;
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   headers?: Record<string, string>;
-  body?: string;
+  body?: string | undefined | Record<string, never>;
   name?: string;
   size: number;
   duration: number;
