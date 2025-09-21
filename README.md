@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img width="1232" height="228" alt="Image" src="https://github.com/user-attachments/assets/326b9f10-71ee-4243-a50b-208be25310da" />
+  <img width="1232" height="228" alt="Image" src="https://wingedseraph.github.io/dump/assets/ascii-art-text.png" />
 </div>
 
 <img width="5088" height="3372" alt="image" src="https://github.com/user-attachments/assets/8b036ece-3bc6-488e-8256-06c741cbb3bf" />
