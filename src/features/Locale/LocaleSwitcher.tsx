@@ -15,7 +15,7 @@ export default function LocaleSwitcher() {
   const pathWithoutLocale = pathname.replace(/^\/(en|ru)/, '') || '/';
 
   return (
-    <Link href={pathWithoutLocale} locale={otherLocale}>
+    <Link role="combobox" href={pathWithoutLocale} locale={otherLocale}>
       {t('switchLocale', { locale: otherLocale })}
     </Link>
   );
