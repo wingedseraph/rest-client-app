@@ -8,6 +8,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     clearMocks: true,
+    setupFiles: ['./setupTests.js'],
     coverage: {
       include: ['src/**/*.{js,jsx,ts,tsx}'],
       exclude: [
