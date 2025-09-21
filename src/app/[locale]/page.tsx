@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-4 text-base text-foreground sm:text-kg lg:text-xl lg:leading-8">
       <div className="h-20 w-full bg-muted">
-        <nav className="flex h-full w-full flex-col items-center justify-center gap-0 text-4xl sm:flex-row sm:gap-5">
+        <nav className="flex h-full w-full flex-row items-center justify-center gap-5 text-lg sm:text-4xl">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href}>
               {link.label}
