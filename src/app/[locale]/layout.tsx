@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { Geist, Geist_Mono } from 'next/font/google';
 import type { Metadata } from 'next';
 
+import Navigation from '@/shared/ui/Navigation/Navigation';
 import Footer from '@/widgets/layout/Footer/Footer';
 import Header from '@/widgets/layout/Header/Header';
 
@@ -55,6 +56,9 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider>
           <Header />
+          <div className="h-20 w-full bg-muted">
+            <Navigation />
+          </div>
           <main>{children}</main>
           <Footer />
         </NextIntlClientProvider>
