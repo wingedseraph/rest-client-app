@@ -1,6 +1,21 @@
-# REST Client
 
-A light-weight version of Postman, open‑source API client built with **Next.js (App Router)**, **React-Hook-Form**, **Zod**, **Tailwind CSS**, **shadcn/ui**.
+<div align="center">
+  <img width="1232" height="228" alt="Image" src="https://github.com/user-attachments/assets/326b9f10-71ee-4243-a50b-208be25310da" />
+</div>
+
+<img width="5088" height="3372" alt="image" src="https://github.com/user-attachments/assets/8b036ece-3bc6-488e-8256-06c741cbb3bf" />
+
+
+A light-weight version of Postman, open‑source API client built with:
+
+- **Next.js** (App Router)
+- **React Hook Form**
+- **Zod**
+- **Tailwind CSS**
+- **shadcn/ui**
+- **Lefthook** (git hooks)
+- **Biome** (lint & format)
+- **Firebase Cloud DB**
 
 ## Getting Started
 
@@ -54,3 +69,4 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - [Nikolai](https://github.com/wingedseraph)
 - [Alexey](https://github.com/RobMarv1n)
 - [Diana](https://github.com/rustytrooper)
+
