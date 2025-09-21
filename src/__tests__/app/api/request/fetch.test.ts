@@ -23,6 +23,9 @@ describe('fetchExternal', () => {
       url: 'https://dummyjson.com/test',
       method: 'GET',
       headers: { 'content-type': 'application/json' },
+      size: 0,
+      duration: 0,
+      timestamp: '',
     });
 
     expect(fetch).toHaveBeenCalledWith('https://dummyjson.com/test', {
@@ -50,6 +53,9 @@ describe('fetchExternal', () => {
     const result = await fetchExternal({
       url: 'https://dummyjson.com/test',
       method: 'POST',
+      size: 0,
+      duration: 0,
+      timestamp: '',
     });
 
     expect(fetch).toHaveBeenCalledWith('https://dummyjson.com/test', {
@@ -75,6 +81,9 @@ describe('fetchExternal', () => {
     const result = await fetchExternal({
       url: 'https://api.example.com/text',
       method: 'GET',
+      size: 0,
+      duration: 0,
+      timestamp: '',
     });
 
     expect(result.data).toBe('Plain text response');
@@ -93,6 +102,9 @@ describe('fetchExternal', () => {
     await fetchExternal({
       url: 'https://dummyjson.com/test',
       method: 'get',
+      size: 0,
+      duration: 0,
+      timestamp: '',
     });
 
     expect(fetch).toHaveBeenCalledWith(
@@ -116,6 +128,9 @@ describe('fetchExternal', () => {
     const result = await fetchExternal({
       url: 'https://dummyjson.com/test',
       method: 'GET',
+      size: 0,
+      duration: 0,
+      timestamp: '',
     });
 
     expect(result.responseTime).toBeGreaterThanOrEqual(0);
@@ -138,6 +153,9 @@ describe('fetchExternal', () => {
     const result = await fetchExternal({
       url: 'https://dummyjson.com/test',
       method: 'GET',
+      size: 0,
+      duration: 0,
+      timestamp: '',
     });
 
     expect(result.headers).toEqual({
