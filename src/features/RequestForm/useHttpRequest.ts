@@ -102,7 +102,7 @@ export function useHttpRequest({
       url: finalUrl,
       method,
       headers: finalHeaders,
-      body: finalBody ? JSON.parse(finalBody) : '',
+      body: finalBody ? JSON.parse(finalBody) : {},
     };
 
     try {

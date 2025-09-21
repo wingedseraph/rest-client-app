@@ -4,7 +4,7 @@ export const requestSchema = z.object({
   url: z.string(),
   method: z.string(),
   headers: z.record(z.string(), z.string()).optional(),
-  body: z.string().optional(),
+  body: z.union([z.object(), z.string()]).optional(),
 });
 
 export const responseSchema = z.object({
