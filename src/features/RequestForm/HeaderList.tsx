@@ -1,9 +1,9 @@
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/Button/button';
 
 import { useTranslations } from 'next-intl';
 
 type Props = {
-  headers: Record<string, string> | undefined;
+  headers: Record<PropertyKey, string> | undefined;
   onRemove: (key: string) => void;
 };
 

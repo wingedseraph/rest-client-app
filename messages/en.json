@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "title": "REST Client",
+    "description": "An application REST Client for the RS School education process"
+  },
   "Hello": {
     "title": "Hello World"
   },
@@ -16,7 +20,8 @@
     "home": "Home",
     "about": "About",
     "signIn": "Login",
-    "signUp": "Register"
+    "signUp": "Register",
+    "logout": "Logout"
   },
   "Footer": {
     "client": "/client",
@@ -35,6 +40,13 @@
     "label": "Change language",
     "switchLocale": "{locale, select, ru {Russian} en {English} other {unknown}}"
   },
+  "Variables": {
+    "header": "Variables",
+    "delete-variable": "Delete",
+    "add-variable": "Add",
+    "add-new-variable": "Add new variable",
+    "error": "Variable already exists"
+  },
   "RequestForm": {
     "method": "Method",
     "url": "URL",
@@ -44,6 +56,7 @@
     "response": "Response",
     "button": {
       "request": "Request",
+      "request-loading": "Requesting...",
       "remove": "Remove",
       "addHeader": "Add Header",
       "prettifyJson": "Prettify JSON"
@@ -61,6 +74,12 @@
       "wrongBody": "Wrong JSON",
       "requestUnknown": "Unknown"
     }
+  },
+  "Codegen": {
+    "generate": "Generate new snippet",
+    "generating": "Generating...",
+    "no-generated-code": "Select a language and click generate",
+    "no-url-generate": "URL is required"
   },
   "FormDataAndErrors": {
     "email-required": "Email is required",

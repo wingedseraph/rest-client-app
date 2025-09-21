@@ -3,8 +3,11 @@ import { z } from 'zod';
 export const requestSchema = z.object({
   url: z.string(),
   method: z.string(),
-  headers: z.record(z.string(), z.string()).optional().nullable(),
-  body: z.unknown().optional(),
+  headers: z.record(z.string(), z.string()).optional(),
+  body: z.union([z.object(), z.string()]).optional(),
+  size: z.number(),
+  duration: z.number(),
+  timestamp: z.string(),
 });
 
 export const responseSchema = z.object({

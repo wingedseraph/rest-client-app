@@ -1,19 +1,39 @@
 'use client';
-import Link from 'next/link';
 
 import LocaleSwitcher from '@/features/Locale/LocaleSwitcher';
+import { Link, useRouter } from '@/i18n/navigation';
+import { routes } from '@/lib/routes';
 import { cn } from '@/lib/utils';
+import { firebaseAuthService } from '@/services/authService';
 import useScroll from '@/shared/hooks/useScroll';
+import { useUser } from '@/shared/hooks/useUser';
 
 import { useTranslations } from 'next-intl';
 
 export default function Header() {
   const t = useTranslations('Header');
+  const router = useRouter();
+  const { user, mutateUser } = useUser();
 
-  const navLinks = [
-    { label: t('signIn'), href: '/login' },
-    { label: t('signUp'), href: '/register' },
-  ];
+  const handleLogout = async () => {
+    await firebaseAuthService.logout();
+    mutateUser(null, { revalidate: false });
+    router.push(routes.MAIN);
+  };
+
+  const navLinks: NavLink[] = user
+    ? [
+        {
+          label: t('logout'),
+          href: routes.MAIN,
+          onClick: handleLogout,
+        },
+      ]
+    : [
+        { label: t('signIn'), href: routes.public.LOGIN },
+        { label: t('signUp'), href: routes.public.REGISTER },
+      ];
+
   const { sticky, headerRef } = useScroll<HTMLDivElement>();
 
   return (
@@ -25,7 +45,7 @@ export default function Header() {
       )}
     >
       <div className="flex flex-row items-center">
-        <Link href="/" className="flex flex-row items-center">
+        <Link href={routes.MAIN} className="flex flex-row items-center">
           <p>
             &#123; REST<span className="font-serif italic">ful</span>API &#125;
           </p>
@@ -34,7 +54,7 @@ export default function Header() {
 
       <nav className="flex flex-col gap-0 text-end sm:flex-row sm:gap-5">
         {navLinks.map((link) => (
-          <Link key={link.href} href={link.href}>
+          <Link key={link.href} href={link.href} onClick={link.onClick}>
             {link.label}
           </Link>
         ))}
@@ -44,3 +64,9 @@ export default function Header() {
     </header>
   );
 }
+
+type NavLink = {
+  label: string;
+  href: string;
+  onClick?: () => void | Promise<void>;
+};

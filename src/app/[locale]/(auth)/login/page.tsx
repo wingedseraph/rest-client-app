@@ -1,11 +1,14 @@
 'use client';
+
 import { useState } from 'react';
 
 import { Link, useRouter } from '@/i18n/navigation';
 import { getFirebaseErrorMessageKey } from '@/lib/errorHelper';
+import { routes } from '@/lib/routes';
 import { type AuthFormData, createAuthSchema } from '@/lib/validation';
 import { firebaseAuthService } from '@/services/authService';
-import { Button } from '@/shared/ui/button';
+import { useUser } from '@/shared/hooks/useUser';
+import { Button } from '@/shared/ui/Button/button';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FirebaseError } from 'firebase/app';
@@ -31,6 +34,7 @@ export default function Login() {
 
   const [firebaseError, setFirebaseError] = useState<string>('');
   const router = useRouter();
+  const { mutateUser } = useUser();
 
   const onSubmit = async (data: AuthFormData) => {
     setFirebaseError('');
@@ -42,7 +46,8 @@ export default function Login() {
         );
 
       if (userCredential?.user) {
-        router.push('/rest-client');
+        router.push(routes.private.REST_CLIENT);
+        mutateUser({ user: userCredential.user }, { revalidate: false });
         router.refresh();
       }
     } catch (error: unknown) {
@@ -65,7 +70,7 @@ export default function Login() {
           <p className="mt-2 text-center text-gray-600 text-sm">
             {tForm('or')}{' '}
             <Link
-              href="/register"
+              href={routes.public.REGISTER}
               className="font-medium text-muted-foreground no-underline hover:text-foreground"
             >
               {tForm('create-account')}

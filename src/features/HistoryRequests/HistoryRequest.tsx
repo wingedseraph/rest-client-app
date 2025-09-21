@@ -1,59 +1,28 @@
 import type { HttpRequest } from '@/features/RequestForm/useHttpRequest';
-import { getFirestore, initializeAdminApp } from '@/lib/firebase/admin';
-import { getServerUser } from '@/lib/firebase/server-auth';
-
-interface UserData {
-  uid: string;
-  name: string;
-  authProvider: string;
-  email: string;
-  requests?: HttpRequest[];
-}
+import { getUserRequests } from '@/services/serverAuthService';
 
 export default async function HistoryRequest() {
-  const user = await getServerUser();
-
-  if (!user) {
-    return (
-      <div className="p-6">
-        <h1 className="mb-4 font-bold text-2xl">Request History</h1>
-        <p className="text-gray-600">
-          Please sign in to view your request history.
-        </p>
-      </div>
-    );
-  }
+  const user = await getUserRequests();
 
   try {
-    initializeAdminApp();
-    const db = getFirestore();
-
-    const userDoc = await db.collection('users').doc(user.uid).get();
-
-    if (!userDoc.exists) {
+    if (!user) {
       return (
         <div className="p-6">
           <h1 className="mb-4 font-bold text-2xl">Request History</h1>
-          <p className="text-gray-600">No user data found.</p>
+          <p className="text-gray-600">
+            Please sign in to view your request history.
+          </p>
         </div>
       );
     }
 
-    const userData = userDoc.data() as UserData;
-    const userRequests: HttpRequest[] = userData?.requests || [];
-
     return (
       <div className="p-6">
-        <h1 className="mb-6 font-bold text-2xl">Request History</h1>
-        <p className="mb-4 text-gray-600 text-sm">
-          Welcome, {userData.name} ({userData.email})
-        </p>
-
-        {userRequests.length === 0 ? (
+        {user?.length === 0 ? (
           <p className="text-gray-600">No requests found in your history.</p>
         ) : (
           <div className="space-y-4">
-            {userRequests.map((request) => (
+            {user.map((request: HttpRequest) => (
               <div
                 key={request.timestamp}
                 className="rounded-lg border bg-white p-4 shadow-sm"
@@ -85,8 +54,10 @@ export default async function HistoryRequest() {
 
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <strong>Time:</strong>{' '}
-                    {new Date(request.timestamp).toLocaleString()}
+                    <strong>Body:</strong> {JSON.stringify(request.body)}
+                  </div>
+                  <div>
+                    <strong>Time:</strong> {request.timestamp}
                   </div>
                   <div>
                     <strong>Duration:</strong> {request.duration}ms

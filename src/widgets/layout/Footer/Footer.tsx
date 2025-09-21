@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import Link from 'next/link';
+
+import { Link } from '@/i18n/navigation';
 
 import { useTranslations } from 'next-intl';
 
@@ -61,9 +62,9 @@ export default function Footer() {
                 <Image
                   src="/logo.webp"
                   alt="logo of rs school"
-                  className="fixed right-0 bottom-0 invert"
-                  width={100}
-                  height={100}
+                  className="fixed right-0 bottom-0 h-[30px] w-[80px] invert"
+                  width={80}
+                  height={30}
                 />
               </a>
             </ul>

@@ -1,7 +1,10 @@
 import { type FormEvent, useState } from 'react';
 
+import type { RequestError } from '@/features/RequestForm/useSharedRequest';
 import { auth } from '@/lib/firebase/client';
+import { interpolateData } from '@/lib/interpolateVariables';
 import { firebaseAuthService } from '@/services/authService';
+import { useLocalStorage } from '@/shared/hooks/useLocalStorage';
 
 import { useTranslations } from 'next-intl';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -34,51 +37,36 @@ export const HTML_METHODS = {
   DELETE: { id: 5, value: 'DELETE' },
 } as const;
 
-export function useHttpRequest() {
+export const LOCAL_STORAGE_KEY = 'REST::CLIENT::VARIABLES' as const;
+
+export type Variable = {
+  id: string;
+  key: string;
+  value: string;
+};
+
+type Props = {
+  request: HttpRequest;
+  updateRequest: (updates: Partial<HttpRequest>) => void;
+  setRequestError: (error: RequestError) => void;
+  setRequestResponse: (response: unknown) => void;
+};
+
+export function useHttpRequest({
+  request,
+  updateRequest,
+  setRequestError,
+  setRequestResponse,
+}: Props) {
   const t = useTranslations('RequestForm');
+  const [isLoading, setIsLoading] = useState(false);
   const [user] = useAuthState(auth);
-
-  const [request, setRequest] = useState<HttpRequest>({
-    url: 'https://dummyjson.com/test',
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    body: '',
-    name: '',
-    size: 0,
-    duration: 0,
-    timestamp: '',
-  });
-  const [currentMethod, setCurrentMethod] =
-    useState<HttpRequest['method']>('GET');
-  const [response, setResponse] = useState<unknown>(null);
-  const [error, setError] = useState({ api: '', body: '' });
-  //  const [currentUser, setCurrentUser] = useState<unknown>(null);
-
-  //  useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged((user) => {
-  //     setCurrentUser(user);
-  //   });
-
-  //   return () => unsubscribe();
-  // }, []);
 
   const getStringSizeInBytes = (str: string): number => {
     return new Blob([str]).size;
   };
 
-  const addHeader = (key: string, value: string) => {
-    if (!key || !value) return;
-    setRequest((prev) => ({
-      ...prev,
-      headers: { ...prev.headers, [key]: value },
-    }));
-  };
-
-  const removeHeader = (key: string) => {
-    const newHeaders = { ...(request.headers || {}) };
-    delete newHeaders[key];
-    setRequest((prev) => ({ ...prev, headers: newHeaders }));
-  };
+  const [variables] = useLocalStorage<Variable[]>(LOCAL_STORAGE_KEY, []);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -86,7 +74,7 @@ export function useHttpRequest() {
     const date = new Date(start);
     const localeString = date.toLocaleString();
 
-    setError({ api: '', body: '' });
+    setRequestError({ api: '', body: '' });
 
     const form = new FormData(event.currentTarget);
     const url = (form.get('url') || '').toString().trim();
@@ -101,20 +89,28 @@ export function useHttpRequest() {
       body &&
       !isJsonString(body)
     ) {
-      setError((prev) => ({ ...prev, body: t('error.wrongBody') }));
+      setRequestError({ api: '', body: t('error.wrongBody') });
       return;
     }
 
-    const encodedUrl = btoa(url);
+    updateRequest({ url, method, body });
+
+    const {
+      url: finalUrl,
+      body: finalBody,
+      headers: finalHeaders,
+    } = interpolateData(url, body, request.headers || {}, variables);
+
+    const encodedUrl = btoa(finalUrl);
     let apiUrl = `/api/${method}/${encodedUrl}`;
 
-    if (body && ['POST', 'PUT', 'PATCH'].includes(method)) {
-      const encodedBody = btoa(body);
+    if (finalBody && ['POST', 'PUT', 'PATCH'].includes(method)) {
+      const encodedBody = btoa(finalBody);
       apiUrl += `/${encodedBody}`;
     }
 
     const queryParams = new URLSearchParams();
-    Object.entries(request.headers || {}).forEach(([key, value]) => {
+    Object.entries(finalHeaders).forEach(([key, value]) => {
       queryParams.append(key, encodeURIComponent(value));
     });
 
@@ -125,57 +121,38 @@ export function useHttpRequest() {
     const displayUrl = apiUrl.replace('/api', '');
     window.history.pushState({}, '', displayUrl);
 
-    // const modifiedRequest: HttpRequest = {
-    //   url,
-    //   method,
-    //   headers: request.headers,
-    //   body: body ? JSON.parse(body) : '',
-    //   name: request.name || '',
-    //   size: requestPayloadSize
-    // };
-
     try {
       const duration = Date.now() - start;
       const modifiedRequest: HttpRequest = {
-        url,
+        url: finalUrl,
         method,
-        headers: request.headers,
-        body: body ? JSON.parse(body) : '',
-        name: request.name || '',
+        headers: finalHeaders,
+        body: finalBody ? JSON.parse(finalBody) : '',
         size: requestPayloadSize,
         duration,
         timestamp: localeString,
       };
+      setIsLoading(true);
       const response = await fetch('/api/request', {
         method: 'POST',
-        headers: Object.fromEntries(
-          Object.entries(request.headers || {}).map(([key, value]) => [
-            key,
-            value,
-          ]),
-        ),
+        headers: finalHeaders,
         body: JSON.stringify(modifiedRequest),
       });
       const data = await response.json();
-      setResponse(data);
+      setRequestResponse(data);
       if (user) {
         await firebaseAuthService.saveUserRequest(user.uid, modifiedRequest);
       }
     } catch {
-      setResponse({
+      setRequestResponse({
         error: 'Wrong Request',
       });
+    } finally {
+      setIsLoading(false);
     }
   };
-
   return {
-    request,
-    currentMethod,
-    setCurrentMethod,
-    response,
-    error,
-    addHeader,
-    removeHeader,
     handleSubmit,
+    isLoading,
   };
 }
