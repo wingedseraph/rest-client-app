@@ -24,6 +24,9 @@ describe('/api/request', () => {
       method: 'GET',
       headers: {},
       body: '',
+      size: 0,
+      duration: 0,
+      timestamp: '2023-01-01T00:00:00.000Z',
     };
 
     const mockResult = {
@@ -77,6 +80,9 @@ describe('/api/request', () => {
       method: 'GET',
       headers: {},
       body: '',
+      size: 0,
+      duration: 0,
+      timestamp: '2023-01-01T00:00:00.000Z',
     };
 
     vi.mocked(requestSchema.parse).mockReturnValue(mockData);

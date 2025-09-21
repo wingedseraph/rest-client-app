@@ -11,7 +11,7 @@ describe('/api/me', () => {
     const { cookies } = await import('next/headers');
     vi.mocked(cookies).mockResolvedValue({
       get: vi.fn().mockReturnValue({ value: 'token' }),
-    } as unknown as ReturnType<typeof cookies>);
+    } as unknown as Awaited<ReturnType<typeof cookies>>);
 
     const response = await GET();
     const data = await response.json();
@@ -27,7 +27,7 @@ describe('/api/me', () => {
     const { cookies } = await import('next/headers');
     vi.mocked(cookies).mockResolvedValue({
       get: vi.fn().mockReturnValue(undefined),
-    } as unknown as ReturnType<typeof cookies>);
+    } as unknown as Awaited<ReturnType<typeof cookies>>);
 
     const response = await GET();
     const data = await response.json();
@@ -43,7 +43,7 @@ describe('/api/me', () => {
     const { cookies } = await import('next/headers');
     vi.mocked(cookies).mockResolvedValue({
       get: vi.fn().mockReturnValue({ value: '' }),
-    } as unknown as ReturnType<typeof cookies>);
+    } as unknown as Awaited<ReturnType<typeof cookies>>);
 
     const response = await GET();
     const data = await response.json();
