@@ -57,7 +57,11 @@ export default function RequestForm({
 
         <BodyEditor
           method={currentMethod}
-          defaultBody={request.body || ''}
+          defaultBody={
+            typeof request.body === 'string'
+              ? request.body
+              : JSON.stringify(request.body || '')
+          }
           bodyError={error.body}
           onBodyChange={(body) => updateRequest({ body })}
         />

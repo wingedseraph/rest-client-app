@@ -18,20 +18,18 @@ export function interpolateData<
   T extends Record<PropertyKey, string | undefined>,
 >(
   url: string = '',
-  body: unknown,
+  body: string | object | undefined = '',
   headers: T,
   variables: Variable[],
 ): {
   url: string;
-  body: string | undefined | Record<string, never>;
+  body: string;
   headers: Record<keyof T, string>;
 } {
-  let interpolatedBody: string;
-  if (typeof body === 'string') {
-    interpolatedBody = interpolateVariables(body, variables);
-  }
   const interpolatedUrl = interpolateVariables(url, variables);
-  // const interpolatedBody = interpolateVariables(body, variables);
+  const stringifyBody =
+    typeof body === 'string' ? body : JSON.stringify(body || '');
+  const interpolatedBody = interpolateVariables(stringifyBody, variables);
   const interpolatedHeaders = Object.fromEntries(
     Object.entries(headers).map(([k, v]) => [
       k,
