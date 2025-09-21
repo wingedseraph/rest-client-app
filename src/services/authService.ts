@@ -15,6 +15,7 @@ import {
   arrayUnion,
   doc,
   type Firestore,
+  getDoc,
   setDoc,
   updateDoc,
 } from 'firebase/firestore';
@@ -45,9 +46,13 @@ class FirebaseAuthService {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token }),
     });
-    await updateDoc(doc(this.db, 'users', user.uid), {
-      authToken: token,
-    });
+    await setDoc(
+      doc(this.db, 'users', user.uid),
+      {
+        authToken: token,
+      },
+      { merge: true },
+    );
   }
 
   async logInWithEmailAndPassword(
@@ -156,12 +161,19 @@ class FirebaseAuthService {
   async saveUserRequest(uid: string, requestData: HttpRequest): Promise<void> {
     try {
       const userRef = doc(this.db, 'users', uid);
+      const userDoc = await getDoc(userRef);
 
-      await updateDoc(userRef, {
-        requests: arrayUnion({
-          ...requestData,
-        }),
-      });
+      if (userDoc.exists()) {
+        await updateDoc(userRef, {
+          requests: arrayUnion({
+            ...requestData,
+          }),
+        });
+      } else {
+        await setDoc(userRef, {
+          requests: [requestData],
+        });
+      }
     } catch (err: unknown) {
       throw new Error(`${err}`);
     }

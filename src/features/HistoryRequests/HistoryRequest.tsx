@@ -5,31 +5,20 @@ export default async function HistoryRequest() {
   const user = await getUserRequests();
 
   try {
-    if (!user) {
-      return (
-        <div className="p-6">
-          <h1 className="mb-4 font-bold text-2xl">Request History</h1>
-          <p className="text-gray-600">
-            Please sign in to view your request history.
-          </p>
-        </div>
-      );
-    }
-
     return (
       <div className="p-6">
         {user?.length === 0 ? (
           <p className="text-gray-600">No requests found in your history.</p>
         ) : (
           <div className="space-y-4">
-            {user.map((request: HttpRequest) => (
+            {user.map((request: HttpRequest, index: number) => (
               <div
-                key={request.timestamp}
+                key={`${request.timestamp}-${request.url}-${index}`}
                 className="rounded-lg border bg-white p-4 shadow-sm"
               >
                 <div className="mb-2 flex items-start justify-between">
                   <h3 className="font-semibold text-lg">
-                    {request.name || 'Unnamed Request'}
+                    {request.name || ''}
                   </h3>
                   <span
                     className={`rounded px-2 py-1 text-xs ${

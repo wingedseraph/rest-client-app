@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 
 type Props = {
   method: HttpRequest['method'];
-  defaultBody: string  | Record<string, never>;
+  defaultBody: string;
   bodyError?: string;
   onBodyChange: (body: string) => void;
 };
@@ -32,12 +32,8 @@ export default function BodyEditor({
   const prettifyJson = useCallback(() => {
     if (!body) return;
     try {
-      if(typeof body === 'string') {
-         const parsed = JSON.parse(body);
+      const parsed = JSON.parse(body);
       handleBodyChange(JSON.stringify(parsed, null, 2));
-      }
-      // const parsed = JSON.parse(body);
-      // handleBodyChange(JSON.stringify(parsed, null, 2));
     } catch {}
   }, [body, handleBodyChange]);
 

@@ -83,7 +83,6 @@ export function useHttpRequest({
     ).toString() as HttpRequest['method'];
     const body = (form.get('body') || '').toString();
 
-    const requestPayloadSize = getStringSizeInBytes(body);
     if (
       ['POST', 'PUT', 'PATCH'].includes(method) &&
       body &&
@@ -105,7 +104,9 @@ export function useHttpRequest({
     let apiUrl = `/api/${method}/${encodedUrl}`;
 
     if (finalBody && ['POST', 'PUT', 'PATCH'].includes(method)) {
-      const encodedBody = btoa(finalBody);
+      const encodedBody = btoa(
+        typeof finalBody === 'string' ? finalBody : JSON.stringify(finalBody),
+      );
       apiUrl += `/${encodedBody}`;
     }
 
@@ -121,25 +122,49 @@ export function useHttpRequest({
     const displayUrl = apiUrl.replace('/api', '');
     window.history.pushState({}, '', displayUrl);
 
-    try {
-      const duration = Date.now() - start;
-      const modifiedRequest: HttpRequest = {
+    const requestBody = finalBody
+      ? typeof finalBody === 'string'
+        ? JSON.parse(finalBody)
+        : finalBody
+      : '';
+    const requestPayloadSize = getStringSizeInBytes(
+      JSON.stringify({
         url: finalUrl,
         method,
         headers: finalHeaders,
-        body: finalBody ? JSON.parse(finalBody) : '',
-        size: requestPayloadSize,
-        duration,
-        timestamp: localeString,
-      };
+        body: requestBody,
+      }),
+    );
+
+    try {
       setIsLoading(true);
       const response = await fetch('/api/request', {
         method: 'POST',
         headers: finalHeaders,
-        body: JSON.stringify(modifiedRequest),
+        body: JSON.stringify({
+          url: finalUrl,
+          method,
+          headers: finalHeaders,
+          body: requestBody,
+          size: requestPayloadSize,
+          duration: 0,
+          timestamp: localeString,
+        }),
       });
       const data = await response.json();
-      setRequestResponse(data);
+      const duration = Date.now() - start;
+
+      const modifiedRequest: HttpRequest = {
+        url: finalUrl,
+        method,
+        headers: finalHeaders,
+        body: requestBody,
+        size: requestPayloadSize,
+        duration,
+        timestamp: localeString,
+      };
+
+      setRequestResponse({ ...data, requestDuration: duration });
       if (user) {
         await firebaseAuthService.saveUserRequest(user.uid, modifiedRequest);
       }
