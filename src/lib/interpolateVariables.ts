@@ -31,7 +31,10 @@ export function interpolateData<
   interpolatedBody = interpolateVariables(body, variables);
  }
   const interpolatedUrl = interpolateVariables(url, variables);
-  // const interpolatedBody = interpolateVariables(body, variables);
+
+  const stringifyBody =
+    typeof body === 'string' ? body : JSON.stringify(body || '');
+  const interpolatedBody = interpolateVariables(stringifyBody, variables);
   const interpolatedHeaders = Object.fromEntries(
     Object.entries(headers).map(([k, v]) => [
       k,

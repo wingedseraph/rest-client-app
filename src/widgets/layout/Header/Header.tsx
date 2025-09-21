@@ -65,7 +65,7 @@ export default function Header() {
   );
 }
 
-type NavLink = {
+export type NavLink = {
   label: string;
   href: string;
   onClick?: () => void | Promise<void>;

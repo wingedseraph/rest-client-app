@@ -121,6 +121,13 @@ export function useHttpRequest({
     const displayUrl = apiUrl.replace('/api', '');
     window.history.pushState({}, '', displayUrl);
 
+    const modifiedRequest: HttpRequest = {
+      url: finalUrl,
+      method,
+      headers: finalHeaders,
+      body: finalBody ? JSON.parse(finalBody) : {},
+    };
+
     try {
       const duration = Date.now() - start;
       const modifiedRequest: HttpRequest = {
