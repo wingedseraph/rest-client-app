@@ -2,50 +2,15 @@
 
 import Image from 'next/image';
 
-import { Link } from '@/i18n/navigation';
-import { routes } from '@/lib/routes';
-import { useUser } from '@/shared/hooks/useUser';
 import { UnderlineText } from '@/shared/ui/Underline/underline';
-import type { NavLink } from '@/widgets/layout/Header/Header';
 
 import { useTranslations } from 'next-intl';
 
 export default function Home() {
   const t = useTranslations('Home');
 
-  const { user } = useUser();
-  const navLinks: NavLink[] = user
-    ? [
-        {
-          label: t('client'),
-          href: routes.private.REST_CLIENT,
-        },
-        {
-          label: t('variables'),
-          href: routes.private.VARIABLES,
-        },
-        {
-          label: t('history'),
-          href: routes.private.HISTORY,
-        },
-      ]
-    : [
-        { label: t('signIn'), href: routes.public.LOGIN },
-        { label: t('signUp'), href: routes.public.REGISTER },
-      ];
-
   return (
     <div className="flex flex-col gap-4 text-base text-foreground sm:text-kg lg:text-xl lg:leading-8">
-      <div className="h-20 w-full bg-muted">
-        <nav className="flex h-full w-full flex-row items-center justify-center gap-5 text-lg sm:text-2xl">
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-      </div>
-
       <div className="flex flex-col items-center justify-between sm:flex-row">
         <p className="text-center sm:text-left"> {t('project')}</p>
         <Image
