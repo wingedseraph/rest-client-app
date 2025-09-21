@@ -1,14 +1,17 @@
 import type { HttpRequest } from '@/features/RequestForm/useHttpRequest';
 import { getUserRequests } from '@/services/serverAuthService';
 
+import { getTranslations } from 'next-intl/server';
+
 export default async function HistoryRequest() {
   const user = await getUserRequests();
+  const t = await getTranslations('History');
 
   try {
     return (
       <div className="p-6">
         {user?.length === 0 ? (
-          <p className="text-gray-600">No requests found in your history.</p>
+          <p className="text-gray-600">{t('noRequests')}</p>
         ) : (
           <div className="space-y-4">
             {user.map((request: HttpRequest, index: number) => (
@@ -38,21 +41,21 @@ export default async function HistoryRequest() {
                 </div>
 
                 <p className="mb-2 text-gray-600 text-sm">
-                  <strong>URL:</strong> {request.url}
+                  <strong>{t('url')}:</strong> {request.url}
                 </p>
 
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <strong>Body:</strong> {JSON.stringify(request.body)}
+                    <strong>{t('body')}:</strong> {JSON.stringify(request.body)}
                   </div>
                   <div>
-                    <strong>Time:</strong> {request.timestamp}
+                    <strong>{t('time')}:</strong> {request.timestamp}
                   </div>
                   <div>
-                    <strong>Duration:</strong> {request.duration}ms
+                    <strong>{t('duration')}:</strong> {request.duration}ms
                   </div>
                   <div>
-                    <strong>Size:</strong> {request.size} bytes
+                    <strong>{t('size')}:</strong> {request.size} bytes
                   </div>
                 </div>
               </div>
@@ -64,10 +67,9 @@ export default async function HistoryRequest() {
   } catch (error) {
     return (
       <div className="p-6">
-        <h1 className="mb-4 font-bold text-2xl">Request History</h1>
+        <h1 className="mb-4 font-bold text-2xl">{t('title')}</h1>
         <p className="text-red-600">
-          Error loading request history. Please try again later. Error:{'·'}
-          {`${error}`}
+          {t('error')} {`${error}`}
         </p>
       </div>
     );
