@@ -14,7 +14,7 @@ export default function Home() {
       <div className="flex flex-col items-center justify-between sm:flex-row">
         <p className="text-center sm:text-left"> {t('project')}</p>
         <Image
-          src="/bread-walk.jpg"
+          src="/bread-walk.avif"
           alt="bread-walk"
           width={360}
           height={360}
@@ -26,7 +26,7 @@ export default function Home() {
       <div className="flex flex-col items-center justify-end sm:flex-row sm:justify-center">
         <p className="order-1 sm:order-2">{t('course')}</p>
         <Image
-          src="/bread-green.jpg"
+          src="/bread-green.avif"
           alt="bread-hardtime"
           width={512}
           height={512}
@@ -43,7 +43,7 @@ export default function Home() {
         </p>
 
         <Image
-          src="/bread-team-cats.jpg"
+          src="/bread-team-cats.avif"
           alt="bread-team-cats"
           width={512}
           height={512}
