@@ -1,11 +1,12 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import LocaleSwitcher from '@/features/Locale/LocaleSwitcher';
 import { Link, useRouter } from '@/i18n/navigation';
 import { routes } from '@/lib/routes';
 import { cn } from '@/lib/utils';
 import { firebaseAuthService } from '@/services/authService';
-import useScroll from '@/shared/hooks/useScroll';
 import { useUser } from '@/shared/hooks/useUser';
 
 import { useTranslations } from 'next-intl';
@@ -14,6 +15,8 @@ export default function Header() {
   const t = useTranslations('Header');
   const router = useRouter();
   const { user, mutateUser } = useUser();
+
+  const [isSticky, setIsSticky] = useState(false);
 
   const handleLogout = async () => {
     await firebaseAuthService.logout();
@@ -34,14 +37,19 @@ export default function Header() {
         { label: t('signUp'), href: routes.public.REGISTER },
       ];
 
-  const { sticky, headerRef } = useScroll<HTMLDivElement>();
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <header
-      ref={headerRef}
       className={cn(
         'flex w-full flex-row items-center justify-between space-x-12 border-muted-foreground border-b-1 text-base tracking-tight transition-all sm:text-lg md:space-x-24',
-        sticky.isSticky && 'fixed top-0 z-50 animate-slideDown bg-background',
+        isSticky && 'fixed top-0 z-50 animate-slideDown bg-background',
       )}
     >
       <div className="flex flex-row items-center">
