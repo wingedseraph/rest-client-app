@@ -3,7 +3,7 @@ pre-push:
   commands:
     all:
       glob: "src/**/*"
-      run: pnpm exec tsc --noEmit && pnpm exec biome check --error-on-warnings && pnpm exec biome format --write && pnpm exec vitest && git add
+      run: pnpm exec tsc --noEmit && pnpm exec biome check --error-on-warnings && pnpm exec biome format --write && pnpm exec vitest run && git add
 
 pre-commit:
   parallel: true
