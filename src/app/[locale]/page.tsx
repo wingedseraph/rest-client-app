@@ -1,18 +1,16 @@
-'use client';
-
 import Image from 'next/image';
 
 import { UnderlineText } from '@/shared/ui/Underline/underline';
 
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
-export default function Home() {
-  const t = useTranslations('Home');
+export default async function Home() {
+  const t = await getTranslations('Home');
 
   return (
     <div className="flex flex-col gap-4 text-base text-foreground sm:text-kg lg:text-xl lg:leading-8">
       <div className="flex flex-col items-center justify-between sm:flex-row">
-        <p className="text-center sm:text-left"> {t('project')}</p>
+        <p className="text-center sm:text-left">{t('project')}</p>
         <Image
           src="/bread-walk.avif"
           alt="bread-walk"
@@ -37,9 +35,7 @@ export default function Home() {
 
       <div className="flex flex-col items-center justify-between sm:flex-row">
         <p className="text-center sm:text-left">
-          {t.rich('developers', {
-            underline: UnderlineText,
-          })}
+          {t.rich('developers', { underline: UnderlineText })}
         </p>
 
         <Image
