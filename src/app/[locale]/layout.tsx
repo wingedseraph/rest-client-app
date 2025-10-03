@@ -1,3 +1,4 @@
+import NextTopLoader from 'nextjs-toploader';
 import '@app/globals.css';
 import type { ReactNode } from 'react';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -55,8 +56,15 @@ export default async function LocaleLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextIntlClientProvider>
+          <NextTopLoader
+            color={'oklch(0.145 0 0)'}
+            height={6}
+            easing={'ease-in '}
+            showSpinner={false}
+            shadow={false}
+          />
           <Header />
-          <div className="h-20 w-full bg-muted">
+          <div className="h-10 w-full bg-muted">
             <Navigation />
           </div>
           <main>{children}</main>
