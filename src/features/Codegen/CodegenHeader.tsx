@@ -29,6 +29,7 @@ export default function CodegenHeader({
       <div className="flex items-center gap-6">
         <select
           id="language-select"
+          aria-label="language-select"
           value={selectedLang}
           onChange={handleChange}
         >

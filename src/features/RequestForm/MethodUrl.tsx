@@ -24,6 +24,7 @@ export default function MethodUrl({
     <div className="flex flex-col items-center gap-4 p-4 sm:flex-row sm:p-0">
       <select
         name="method"
+        aria-label="method-select"
         defaultValue={method}
         onChange={(e) =>
           onMethodChange(e.target.value as HttpRequest['method'])
