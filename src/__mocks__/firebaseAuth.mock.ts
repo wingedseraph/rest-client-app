@@ -1,15 +1,17 @@
-vi.mock('firebase/auth', async () => {
-  const actual =
-    await vi.importActual<typeof import('firebase/auth')>('firebase/auth');
-  return {
-    ...actual,
-    getAuth: vi.fn(() => ({
-      currentUser: null,
-      onAuthStateChanged: vi.fn(() => () => {}),
-    })),
-    signInWithEmailAndPassword: vi.fn(),
-    createUserWithEmailAndPassword: vi.fn(),
-    sendPasswordResetEmail: vi.fn(),
-    signOut: vi.fn(),
-  };
-});
+export const mockFirebaseAuth = () => {
+  vi.mock('firebase/auth', async () => {
+    const actual =
+      await vi.importActual<typeof import('firebase/auth')>('firebase/auth');
+    return {
+      ...actual,
+      getAuth: vi.fn(() => ({
+        currentUser: null,
+        onAuthStateChanged: vi.fn(() => () => {}),
+      })),
+      signInWithEmailAndPassword: vi.fn(),
+      createUserWithEmailAndPassword: vi.fn(),
+      sendPasswordResetEmail: vi.fn(),
+      signOut: vi.fn(),
+    };
+  });
+};

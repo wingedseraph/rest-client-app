@@ -13,11 +13,7 @@ describe('CodeView', () => {
   test('should render CodeView component correctly with right data', () => {
     renderWithIntl(<CodeView data={CodegenData} error={null} />);
 
-    expect(
-      screen.getByText(
-        'curl --location --request GET "https://dummyjson.com/test"',
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByText(CodegenData.snippet)).toBeInTheDocument();
   });
   test('should render CodeView component correctly with error data', () => {
     renderWithIntl(<CodeView data={null} error={'Error'} />);

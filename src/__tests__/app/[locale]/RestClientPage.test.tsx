@@ -1,3 +1,4 @@
+import { mockFirebaseAuth } from '@/__mocks__/firebaseAuth.mock';
 import { mockNextNavigation } from '@/__mocks__/nextNavigation.mock';
 import { renderWithIntl } from '@/__mocks__/renderWithIntl';
 import RestClientPage from '@/app/[locale]/(rest-client)/rest-client/page';
@@ -5,21 +6,7 @@ import RestClientPage from '@/app/[locale]/(rest-client)/rest-client/page';
 import { screen } from '@testing-library/react';
 
 mockNextNavigation();
-vi.mock('firebase/auth', async () => {
-  const actual =
-    await vi.importActual<typeof import('firebase/auth')>('firebase/auth');
-  return {
-    ...actual,
-    getAuth: vi.fn(() => ({
-      currentUser: null,
-      onAuthStateChanged: vi.fn(() => () => {}),
-    })),
-    signInWithEmailAndPassword: vi.fn(),
-    createUserWithEmailAndPassword: vi.fn(),
-    sendPasswordResetEmail: vi.fn(),
-    signOut: vi.fn(),
-  };
-});
+mockFirebaseAuth();
 
 describe('RestClientPage', () => {
   test('should RestClientPage with all content', () => {
@@ -28,11 +15,12 @@ describe('RestClientPage', () => {
     const methodSelect = screen.getByRole('combobox', {
       name: 'method-select',
     });
-    expect(methodSelect).toBeInTheDocument();
-    //
+
     const languageSelect = screen.getByRole('combobox', {
       name: 'language-select',
     });
+
+    expect(methodSelect).toBeInTheDocument();
     expect(languageSelect).toBeInTheDocument();
 
     expect(screen.getByRole('option', { name: 'GET' })).toBeInTheDocument();
