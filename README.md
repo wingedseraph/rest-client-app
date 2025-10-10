@@ -18,8 +18,6 @@ A light-weight version of Postman, open‑source API client built with:
 - **Zod**
 - **Tailwind CSS**
 - **shadcn/ui**
-- **Lefthook** (git hooks)
-- **Biome** (lint & format)
 - **Firebase Cloud DB**
 
 ## Getting Started
