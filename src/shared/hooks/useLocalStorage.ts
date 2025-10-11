@@ -5,33 +5,21 @@ export function useLocalStorage<T>(
   initialValue: T,
 ): [T, Dispatch<SetStateAction<T>>] {
   const [state, setState] = useState<T>(initialValue);
-  const [isClient, setIsClient] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-
     try {
       const item = window.localStorage.getItem(key);
       if (item) {
         setState(JSON.parse(item));
       }
-      setIsLoaded(true);
     } catch (error) {
       if (error instanceof Error) {
         console.warn('Error loading from localStorage:', error.message);
       }
-      setIsLoaded(true);
     }
-  }, [key, isClient]);
+  }, [key]);
 
   useEffect(() => {
-    if (!isClient || !isLoaded) return;
-
     try {
       window.localStorage.setItem(key, JSON.stringify(state));
     } catch (error) {
@@ -39,7 +27,7 @@ export function useLocalStorage<T>(
         console.warn('Error saving to localStorage:', error.message);
       }
     }
-  }, [key, state, isClient, isLoaded]);
+  }, [key, state]);
 
   return [state, setState];
 }

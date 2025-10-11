@@ -23,16 +23,15 @@ function VariablesView() {
     <div className="flex flex-col items-center justify-center gap-4 p-4">
       <h3 className="font-semibold text-xl">{t('header')}</h3>
 
-      {variables.length > 0 && (
-        <VariablesList variables={variables} deleteVariable={deleteVariable} />
-      )}
-
       <VariablesInput
         addVariable={addVariable}
         errorVariable={errorVariable}
         handleInputChange={handleInputChange}
         newVariable={newVariable}
       />
+      {variables.length > 0 && (
+        <VariablesList variables={variables} deleteVariable={deleteVariable} />
+      )}
     </div>
   );
 }
