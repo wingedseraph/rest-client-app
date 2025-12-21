@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "title": "REST Client",
+    "description": "An application REST Client for the RS School education process"
+  },
+  "Home": {
+    "signIn": "/login",
+    "signUp": "/register",
+    "client": "/client",
+    "variables": "/variables",
+    "history": "/history",
+    "project": "Our project is a minimalistic REST client inspired by Postman. It allows users to easily send HTTP requests with support for various methods (GET, POST, PUT, etc.), custom URLs, headers, and request bodies in JSON or form-data. Key features include a real-time response viewer with status codes and formatting, automatic code generation in  cURL, JavaScript, or etc, a history of recent requests for quick access, and environment variables for dynamic data replacement.",
+    "course": "This project was built as part of a comprehensive React course that took us from zero to hero. Starting from the basics like components, props, and state, we progressed to advanced topics: hooks (useState, useEffect, custom hooks), App routing with Next.js, sync state management with Context or Redux & Zustand, async state manager with RTK Query & Tanstack Query, Firebase API integration, and internationalization with next-intl. The course covered best practices for building scalable UIs, testing with Vitest & Jest, and deploying to Netlify & Vercel — a full journey from beginner concepts to production-ready apps.",
+    "developers": "The project was developed by a talented team of three: <underline>Nikolai</underline>, the frontend lead who handled React components and UI/UX design; <underline>Diana</underline>, the backend specialist focusing on API mocking and data persistence; and <underline>Alexey</underline>, the full-stack integrator who tied everything together with TypeScript and optimization. Together, we collaborated via GitHub, iterating on feedback to create an awesome tool."
+  },
+  "About": {
+    "title": "About This App",
+    "description": "This application is a demo REST client built with Next. It allows you to send HTTP requests, explore APIs and inspect responses, similar to tools like Postman.",
+    "back": "Go back to homepage"
+  },
+  "NotFound": {
+    "title": "404 — Page Not Found",
+    "description": "Sorry, the page you're looking for does not exist.",
+    "back": "Go back to homepage"
+  },
+  "Header": {
+    "home": "Home",
+    "about": "About",
+    "signIn": "Login",
+    "signUp": "Register",
+    "logout": "Logout"
+  },
+  "Footer": {
+    "client": "/client",
+    "variables": "/variables",
+    "history": "/history"
+  },
+  "Search": {
+    "button": "Search",
+    "placeholder": "Enter URL"
+  },
+  "ErrorBoundary": {
+    "title": "Something went wrong",
+    "retry-button": "Try again"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "switchLocale": "{locale, select, ru {Russian} en {English} other {unknown}}"
+  },
+  "Variables": {
+    "header": "Variables",
+    "delete-variable": "Delete",
+    "add-variable": "Add",
+    "add-new-variable": "Add new variable",
+    "error": "Variable already exists"
+  },
+  "RequestForm": {
+    "method": "Method",
+    "url": "URL",
+    "headers": "Headers",
+    "body": "Body",
+    "send": "Send Request",
+    "response": "Response",
+    "button": {
+      "request": "Request",
+      "request-loading": "Requesting...",
+      "remove": "Remove",
+      "addHeader": "Add Header",
+      "prettifyJson": "Prettify JSON"
+    },
+    "label": {
+      "requestBody": "Request Body"
+    },
+    "status": {
+      "status": "Status",
+      "statusText": "Status Text",
+      "responseTime": "Response Time"
+    },
+    "error": {
+      "wrongHeader": "Wrong header key or value",
+      "wrongBody": "Wrong JSON",
+      "requestUnknown": "Unknown"
+    }
+  },
+  "Codegen": {
+    "generate": "Generate new snippet",
+    "generating": "Generating...",
+    "no-generated-code": "Select a language and click generate",
+    "no-url-generate": "URL is required"
+  },
+  "FormDataAndErrors": {
+    "email-required": "Email is required",
+    "email-invalid": "Invalid type of email",
+    "password-required": "Password is required",
+    "password-too-short": "Password should use more than 8 symbols",
+    "password-uppercase": "Password should use at least 1 uppercase letter",
+    "password-number": "Password should use at least 1 numeric symbol",
+    "name-length": "Name should be more than 3 symbols",
+    "create-account": "Create account",
+    "or": "or",
+    "log-in": "Log in",
+    "password": "Password",
+    "insert-name": "Insert your name",
+    "insert-password": "Insert your password",
+    "register": {
+      "name": "Name",
+      "register": "Register"
+    }
+  },
+  "FirebaseErrors": {
+    "auth/user-not-found": "There is no user with such e-mail",
+    "auth/email-already-in-use": "User with such e-mail already exists",
+    "auth/wrong-password": "Wrong password",
+    "auth/invalid-email": "Wrong email",
+    "auth/invalid-credential": "Wrong credential data",
+    "auth/too-many-requests": "Too many tries. Please try later",
+    "auth/user-disabled": "Account is blocked",
+    "unknown": "Unknown error"
+  },
+  "History": {
+    "title": "Request History",
+    "noRequests": "No requests found in your history.",
+    "url": "URL",
+    "body": "Body",
+    "time": "Time",
+    "duration": "Duration",
+    "size": "Size",
+    "error": "Error loading request history. Please try again later. Error:"
+  }
+}

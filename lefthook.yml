@@ -1,0 +1,22 @@
+pre-push:
+  parallel: true
+  commands:
+    all:
+      glob: "src/**/*"
+      run: pnpm exec tsc --noEmit && pnpm exec biome check --error-on-warnings && pnpm exec biome format --write && pnpm exec vitest run && git add
+
+pre-commit:
+  parallel: true
+  commands:
+    all:
+      glob: "src/**/*"
+      run: pnpm exec biome check {staged_files} && pnpm exec biome format --write {staged_files} && git add {staged_files}
+      stage_fixed: true
+
+commit-msg:
+  parallel: true
+  scripts:
+    # Lint commit messages based by the conventional commits
+    # https://www.conventionalcommits.org/en/v1.0.0/
+    "commitlint.sh":
+      runner: bash
